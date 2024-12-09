@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CreateArea : MonoBehaviour
 {
+    Collider2D coll;
+    private void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+    }
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Area"))           // 자동생성맵 로직
@@ -28,6 +33,10 @@ public class CreateArea : MonoBehaviour
                     }
                     break;
                 case "Enemy":
+                    if (coll.enabled)
+                    {
+                        transform.Translate(playerDir * 30 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));
+                    }
                     break;
             }
         }
