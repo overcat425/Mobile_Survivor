@@ -153,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 415412984}
   enemySpawnPool: {fileID: 1715137204}
+  gameTime: 0
+  maxGameTime: 20
 --- !u!4 &113616301
 Transform:
   m_ObjectHideFlags: 0
@@ -5217,6 +5219,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea4af146176aa746bc2e03dc7d45ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnData:
+  - Type: 0
+    spawnTime: 0.7
+    health: 10
+    speed: 1.5
+  - Type: 1
+    spawnTime: 0.2
+    health: 15
+    speed: 2.5
   spawnPoint: []
 --- !u!1 &914760618
 GameObject:
@@ -14089,7 +14100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyObject:
   - {fileID: 218187423422391618, guid: d8f942b3ca594434e82534f62b1f48a0, type: 3}
-  - {fileID: 1615218252531019075, guid: c297dc81efff73a4f89001eb89938c0b, type: 3}
 --- !u!4 &1715137205
 Transform:
   m_ObjectHideFlags: 0
