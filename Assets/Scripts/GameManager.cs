@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     public Player player;
     public static GameManager instance;
     public EnemySpawnPool enemySpawnPool;
-
+    [Header("PlaterInfo")]
+    public int level;
+    public int kills;
+    public int exp;
+    public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    [Header("Control")]
     public float gameTime;
     public float maxGameTime = 2 * 10f;
 
@@ -22,6 +27,15 @@ public class GameManager : MonoBehaviour
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
+        }
+    }
+    public void GetExp()
+    {
+        exp++;
+        if(exp == nextExp[level])
+        {
+            level++;
+            exp = 0;
         }
     }
 }
