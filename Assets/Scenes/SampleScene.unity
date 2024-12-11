@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 23358154}
   - component: {fileID: 23358155}
   m_Layer: 0
-  m_Name: Weapons
+  m_Name: Shovel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   prefabId: 1
-  damage: 11
+  damage: 5
   count: 2
   speed: 0
 --- !u!1 &113616299
@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 415412983}
   - component: {fileID: 415412984}
   - component: {fileID: 415412985}
+  - component: {fileID: 415412987}
   - component: {fileID: 415412986}
   m_Layer: 0
   m_Name: Player
@@ -467,6 +468,7 @@ Transform:
   m_Children:
   - {fileID: 344877037}
   - {fileID: 23358154}
+  - {fileID: 973384374}
   - {fileID: 554665330}
   - {fileID: 779292138}
   m_Father: {fileID: 0}
@@ -520,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputVec: {x: 0, y: 0}
   speed: 3
+  scanner: {fileID: 0}
 --- !u!114 &415412985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +574,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &415412987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415412979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74f3d7f183a49c48bcecb7561cf232f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  nearest: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +699,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.972222
+  orthographic size: 8.126985
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9569,6 +9589,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502ce912545692f4b83c05f771960bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &973384373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973384374}
+  - component: {fileID: 973384375}
+  m_Layer: 0
+  m_Name: Bullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &973384374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973384373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 415412982}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &973384375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973384373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a13c441f37592418d20c781f9848c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  prefabId: 2
+  damage: 3
+  count: 0
+  speed: 0
 --- !u!1 &1015896164
 GameObject:
   m_ObjectHideFlags: 0
@@ -14151,6 +14220,7 @@ MonoBehaviour:
   enemyObject:
   - {fileID: 218187423422391618, guid: d8f942b3ca594434e82534f62b1f48a0, type: 3}
   - {fileID: 6222046046912346855, guid: c7669d2958fa316499426cea2379e398, type: 3}
+  - {fileID: 27622808846319990, guid: 8372ad3a9e250594c852e9371ce7801a, type: 3}
 --- !u!4 &1715137205
 Transform:
   m_ObjectHideFlags: 0

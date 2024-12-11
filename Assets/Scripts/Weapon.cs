@@ -9,7 +9,12 @@ public class Weapon : MonoBehaviour
     public float damage;
     public int count;
     public float speed;
-
+    float timer;
+    Player player;
+    private void Awake()
+    {
+        player = GetComponentInParent<Player>();
+    }
     private void Start()
     {
         Init();
@@ -22,6 +27,12 @@ public class Weapon : MonoBehaviour
                 transform.Rotate(Vector3.back * speed * Time.deltaTime);
                 break;
             default:
+                timer += Time.deltaTime;
+                if (timer > speed)
+                {
+                    timer = 0f;
+                    Fire();
+                }
                 break;
         }
         if (Input.GetButtonDown("Fire1"))
@@ -39,6 +50,7 @@ public class Weapon : MonoBehaviour
                 WeaponCount();
                 break;
             default:
+                speed = 0.3f;
                 break;
         }
     }
@@ -59,12 +71,26 @@ public class Weapon : MonoBehaviour
 
             bullet.localPosition = Vector3.zero; // bullet의 위치를 플레이어로 초기화
             bullet.localRotation = Quaternion.identity;
-            bullet.GetComponent<Bullet>().Init(damage, -1); // 근접무기라 사용횟수 무한(-1)
+            bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // 근접무기라 사용횟수 무한(-1)
 
             Vector3 rotate = Vector3.forward * 360 * i / count;
             bullet.Rotate(rotate);
             bullet.Translate(bullet.up * 1.5f, Space.World);
 
+        }
+    }
+    void Fire()
+    {
+        if (player.scanner.nearest)
+        {
+            Vector3 targetPos = player.scanner.nearest.position;
+            Vector3 dir = targetPos - transform.position; // 총알이 나갈 방향
+            dir = dir.normalized;
+
+            Transform bullet = GameManager.instance.enemySpawnPool.Spawn(prefabId).transform;
+            bullet.position = transform.position;
+            bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 목표에 맞게 총알 회전
+            bullet.GetComponent<Bullet>().Init(damage, count, dir);
         }
     }
     public void LvUp(float damage, int count)
