@@ -11,38 +11,49 @@ public class Weapon : MonoBehaviour
     public float speed;
     float timer;
     Player player;
-    private void Awake()
+    void Awake()
     {
-        player = GetComponentInParent<Player>();
-    }
-    private void Start()
-    {
-        Init();
+        player = GameManager.instance.player;
     }
     void Update()
     {
+
         switch (id)
         {
             case 0:
                 transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                Debug.Log(speed);
                 break;
             default:
                 timer += Time.deltaTime;
                 if (timer > speed)
                 {
-                    timer = 0f;
                     Fire();
+                    //Debug.Log("time : " + timer);
+                    //Debug.Log("speed : " + speed);
+                    //Debug.Log("발사");
+                    timer = 0f;
                 }
                 break;
         }
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("작동함");
-            LvUp(20f, 1);
-        }
     }
-    public void Init()
+    public void Init(ItemData data)
     {
+        name = "Weapon " + data.itemId;
+        transform.parent = player.transform;
+        transform.localPosition = Vector3.zero;
+
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+        for (int i = 0; i < GameManager.instance.enemySpawnPool.enemyObject.Length; i++)
+        {
+            if (data.projectile == GameManager.instance.enemySpawnPool.enemyObject[i])
+            {
+                prefabId = i;
+                break;
+            }
+        }
         switch (id)
         {
             case 0:
@@ -53,6 +64,8 @@ public class Weapon : MonoBehaviour
                 speed = 0.3f;
                 break;
         }
+        player.BroadcastMessage("UpGrade", SendMessageOptions.DontRequireReceiver);
+        // 나중에 생성된 무기도 기존 업그레이드 수치를 받도록 적용
     }
     void WeaponCount()
     {
@@ -101,5 +114,6 @@ public class Weapon : MonoBehaviour
         {
             WeaponCount();
         }
+        player.BroadcastMessage("UpGrade", SendMessageOptions.DontRequireReceiver);
     }
 }
