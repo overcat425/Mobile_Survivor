@@ -22,7 +22,6 @@ public class Weapon : MonoBehaviour
         {
             case 0:
                 transform.Rotate(Vector3.back * speed * Time.deltaTime);
-                Debug.Log(speed);
                 break;
             default:
                 timer += Time.deltaTime;
@@ -64,6 +63,9 @@ public class Weapon : MonoBehaviour
                 speed = 0.3f;
                 break;
         }
+        WeaponFlip hand = player.hand[(int)data.itemType];
+        hand.sprite.sprite = data.hand;
+        hand.gameObject.SetActive(true);
         player.BroadcastMessage("UpGrade", SendMessageOptions.DontRequireReceiver);
         // 나중에 생성된 무기도 기존 업그레이드 수치를 받도록 적용
     }

@@ -11,12 +11,15 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
     Animator anim;
+
+    public WeaponFlip[] hand;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scanner = GetComponent<EnemyScanner>();
+        hand = GetComponentsInChildren<WeaponFlip>(true);
     }
     void Start()
     {
