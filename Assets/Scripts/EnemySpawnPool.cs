@@ -37,13 +37,4 @@ public class EnemySpawnPool : MonoBehaviour
 
         return active;
     }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

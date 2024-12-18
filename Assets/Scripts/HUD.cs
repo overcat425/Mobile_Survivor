@@ -16,10 +16,6 @@ public class HUD : MonoBehaviour
         text = GetComponent<Text>();
         slider = GetComponent<Slider>();
     }
-    void Start()
-    {
-        
-    }
 
     void LateUpdate()
     {

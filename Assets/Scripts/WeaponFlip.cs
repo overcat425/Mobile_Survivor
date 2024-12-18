@@ -19,11 +19,6 @@ public class WeaponFlip : MonoBehaviour
         player = GetComponentsInParent<SpriteRenderer>()[1];
     }
 
-    void Start()
-    {
-        
-    }
-
     void LateUpdate()
     {
         bool isRev = player.flipX;
@@ -35,7 +30,6 @@ public class WeaponFlip : MonoBehaviour
         }
         else // Range
         {
-            //transform.localPosition = isRev ? rightPosRev : rightPos;
             sprite.flipX = isRev;
             sprite.sortingOrder = isRev ? 6 : 4;
         }

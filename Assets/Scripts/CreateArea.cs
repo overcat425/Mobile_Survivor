@@ -41,13 +41,4 @@ public class CreateArea : MonoBehaviour
             }
         }
     }
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
 }

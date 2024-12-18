@@ -8,10 +8,6 @@ public class EnemyScanner : MonoBehaviour
     public LayerMask targetLayer;
     public RaycastHit2D[] targets;
     public Transform nearest;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void FixedUpdate()

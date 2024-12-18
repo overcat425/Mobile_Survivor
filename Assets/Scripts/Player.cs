@@ -21,15 +21,6 @@ public class Player : MonoBehaviour
         scanner = GetComponent<EnemyScanner>();
         hand = GetComponentsInChildren<WeaponFlip>(true);
     }
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-
-    }
-    
     void OnMove(InputValue value)
     {
         inputVec = value.Get<Vector2>();

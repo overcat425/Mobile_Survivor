@@ -42,7 +42,6 @@ public class Item : MonoBehaviour
                 textInfo.text = string.Format(data.itemInfo);
                 break;
         }
-
     }
     public void OnClick()
     {
