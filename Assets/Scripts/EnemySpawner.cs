@@ -15,12 +15,15 @@ public class EnemySpawner : MonoBehaviour
     }
     void Update()
     {
-        timer += Time.deltaTime;
-        level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10f), spawnData.Length -1);
-        if(timer > spawnData[level].spawnTime)
+        if (GameManager.instance.isLive == true)
         {
-            Spawn();
-            timer = 0f;
+            timer += Time.deltaTime;
+            level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10f), spawnData.Length -1);
+            if(timer > spawnData[level].spawnTime)
+            {
+                Spawn();
+                timer = 0f;
+            }
         }
     }
     void Spawn()

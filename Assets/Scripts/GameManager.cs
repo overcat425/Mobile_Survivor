@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public static GameManager instance;
     public EnemySpawnPool enemySpawnPool;
+    public LevelUp lvupUi;
     [Header("PlaterInfo")]
     public int level;
     public int kills;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Control")]
     public float gameTime;
     public float maxGameTime = 2 * 10f;
+    public bool isLive;
 
     private void Awake()
     {
@@ -25,23 +27,39 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        lvupUi.InitAttack(0);
     }
     void Update()
     {
-        gameTime += Time.deltaTime;
-
-        if (gameTime > maxGameTime)
+        if (isLive == true)
         {
-            gameTime = maxGameTime;
+            gameTime += Time.deltaTime;
+
+            if (gameTime > maxGameTime)
+            {
+                gameTime = maxGameTime;
+            }
         }
+
     }
     public void GetExp()
     {
         exp++;
-        if(exp == nextExp[level])
+        if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
         {
             level++;
             exp = 0;
+            lvupUi.Show();
         }
+    }
+    public void Stop()
+    {
+        isLive = false;
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        isLive = true;
+        Time.timeScale = 1;
     }
 }

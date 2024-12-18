@@ -27,19 +27,25 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isDie && !anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        if (GameManager.instance.isLive == true)
         {
-            Vector2 dirVec = target.position - rigid.position;
-            Vector2 chasingDir = dirVec.normalized * speed * Time.fixedDeltaTime;
-            rigid.MovePosition(rigid.position + chasingDir);
-            rigid.velocity = Vector2.zero;
+            if (!isDie && !anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            {
+                Vector2 dirVec = target.position - rigid.position;
+                Vector2 chasingDir = dirVec.normalized * speed * Time.fixedDeltaTime;
+                rigid.MovePosition(rigid.position + chasingDir);
+                rigid.velocity = Vector2.zero;
+            }
         }
     }
     private void LateUpdate()
     {
-        if (!isDie)
+        if (GameManager.instance.isLive == true)
         {
-            sprite.flipX = target.position.x < rigid.position.x;
+            if (!isDie)
+            {
+                sprite.flipX = target.position.x < rigid.position.x;
+            }
         }
     }
     void OnEnable()

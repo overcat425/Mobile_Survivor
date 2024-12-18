@@ -17,24 +17,27 @@ public class Weapon : MonoBehaviour
     }
     void Update()
     {
-
-        switch (id)
+        if (GameManager.instance.isLive == true)
         {
-            case 0:
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
-                break;
-            default:
-                timer += Time.deltaTime;
-                if (timer > speed)
-                {
-                    Fire();
-                    //Debug.Log("time : " + timer);
-                    //Debug.Log("speed : " + speed);
-                    //Debug.Log("발사");
-                    timer = 0f;
-                }
-                break;
+            switch (id)
+            {
+                case 0:
+                    transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                    break;
+                default:
+                    timer += Time.deltaTime;
+                    if (timer > speed)
+                    {
+                        Fire();
+                        //Debug.Log("time : " + timer);
+                        //Debug.Log("speed : " + speed);
+                        //Debug.Log("발사");
+                        timer = 0f;
+                    }
+                    break;
+            }
         }
+
     }
     public void Init(ItemData data)
     {
