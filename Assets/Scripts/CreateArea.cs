@@ -23,16 +23,16 @@ public class CreateArea : MonoBehaviour
             float dirY = playerDir.y < 0 ? -1 : 1;
             switch (transform.tag)
             {
-                case "Ground":
-                    if (diffX > diffY)
-                    {
-                        transform.Translate(Vector3.right * dirX * 40); // 맵이 3X3에 20칸이므로 2칸씩 가야함 -> 20x2 = 40
-                    }else if (diffX < diffY)
-                    {
-                        transform.Translate(Vector3.up * dirY * 40);
-                    }
+                case "Ground":          // 맵 재배치
+                        if (diffX > diffY)
+                        {
+                            transform.Translate(Vector3.right * dirX * 40); // 맵이 3X3에 20칸이므로 2칸씩 가야함 -> 20x2 = 40
+                        }else if (diffX < diffY)
+                        {
+                            transform.Translate(Vector3.up * dirY * 40);
+                        }
                     break;
-                case "Enemy":
+                case "Enemy":           // 적이 멀리 떨어질 시 플레이어 이동방향으로 재배치
                     if (coll.enabled)
                     {
                         transform.Translate(playerDir * 30 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));

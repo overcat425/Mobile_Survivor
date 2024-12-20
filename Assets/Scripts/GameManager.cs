@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,21 +14,35 @@ public class GameManager : MonoBehaviour
     public int kills;
     public int exp;
     public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
-    public int health;
-    public int maxHealth = 100;
+    public float health;
+    public float maxHealth = 100;
     [Header("Control")]
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     public bool isLive;
-
+    public GameResult resultUi;
+    public GameObject enemyCleaner;
     private void Awake()
     {
         instance = this;
     }
-    private void Start()
+    public void GameStart()
     {
         health = maxHealth;
         lvupUi.InitAttack(0);
+        Resume();
+    }
+    public void GameOver()
+    {
+        StartCoroutine("DyingAnim");
+    }
+    public void GameClear()
+    {
+        StartCoroutine("ClearAnim");
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
     void Update()
     {
@@ -35,21 +50,25 @@ public class GameManager : MonoBehaviour
         {
             gameTime += Time.deltaTime;
 
-            if (gameTime > maxGameTime)
+            if (gameTime > maxGameTime)     // 생존 성공
             {
                 gameTime = maxGameTime;
+                GameClear();
             }
         }
 
     }
     public void GetExp()
     {
-        exp++;
-        if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
+        if (isLive == true)
         {
-            level++;
-            exp = 0;
-            lvupUi.Show();
+            exp++;
+            if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
+            {
+                level++;
+                exp = 0;
+                lvupUi.Show();
+            }
         }
     }
     public void Stop()
@@ -61,5 +80,22 @@ public class GameManager : MonoBehaviour
     {
         isLive = true;
         Time.timeScale = 1;
+    }
+    IEnumerator DyingAnim()
+    {
+        isLive = false;
+        yield return new WaitForSeconds(0.5f);
+        resultUi.gameObject.SetActive(true);
+        resultUi.Defeat();
+        Stop();
+    }
+    IEnumerator ClearAnim()
+    {
+        isLive = false;
+        enemyCleaner.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        resultUi.gameObject.SetActive(true);
+        resultUi.Clear();
+        Stop();
     }
 }

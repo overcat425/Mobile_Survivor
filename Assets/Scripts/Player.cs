@@ -45,4 +45,20 @@ public class Player : MonoBehaviour
             }
         }
     }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (GameManager.instance.isLive)            // 피격시 프레임수준에서 체력감소
+        {
+            GameManager.instance.health -= Time.deltaTime * 10;
+        }
+        if (GameManager.instance.health < 0)            // 사망시 무기 비활성화 후 묘비애니메이션
+        {
+            for (int i = 2; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            anim.SetTrigger("Dead");
+            GameManager.instance.GameOver();
+        }
+    }
 }
