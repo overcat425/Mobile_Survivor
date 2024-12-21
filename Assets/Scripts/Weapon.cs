@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         id = data.itemId;
-        damage = data.baseDamage;
+        damage = data.baseDamage * Character.Damage;
         count = data.baseCount;
         for (int i = 0; i < GameManager.instance.enemySpawnPool.enemyObject.Length; i++)
         {
@@ -59,11 +59,11 @@ public class Weapon : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150;
+                speed = 150 * Character.AttackSpeed;
                 WeaponCount();
                 break;
             default:
-                speed = 0.3f;
+                speed = 0.3f * Character.AttackRate;
                 break;
         }
         WeaponFlip hand = player.hand[(int)data.itemType];
@@ -110,7 +110,7 @@ public class Weapon : MonoBehaviour
     }
     public void LvUp(float damage, int count)
     {
-        this.damage = damage;
+        this.damage = damage * Character.Damage;
         this.count += count;
         if(id == 0)
         {

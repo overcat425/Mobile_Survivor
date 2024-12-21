@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D target;
     bool isDie;
     Rigidbody2D rigid;
-    Collider2D collider;
+    Collider2D collider;  //
     SpriteRenderer sprite;
     Animator anim;
     WaitForFixedUpdate wait;

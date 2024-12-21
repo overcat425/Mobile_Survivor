@@ -9,27 +9,33 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public EnemySpawnPool enemySpawnPool;
     public LevelUp lvupUi;
-    [Header("PlaterInfo")]
+    [Header("PlayerInfo")]
     public int level;
     public int kills;
     public int exp;
     public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     public float health;
     public float maxHealth = 100;
+    public int playerId;
+
     [Header("Control")]
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     public bool isLive;
     public GameResult resultUi;
     public GameObject enemyCleaner;
+    public GameObject characters;
     private void Awake()
     {
         instance = this;
     }
-    public void GameStart()
+    public void GameStart(int id)
     {
+        playerId = id;
         health = maxHealth;
-        lvupUi.InitAttack(0);
+
+        player.gameObject.SetActive(true);
+        lvupUi.InitAttack(playerId % 2);
         Resume();
     }
     public void GameOver()
@@ -56,7 +62,6 @@ public class GameManager : MonoBehaviour
                 GameClear();
             }
         }
-
     }
     public void GetExp()
     {
@@ -97,5 +102,9 @@ public class GameManager : MonoBehaviour
         resultUi.gameObject.SetActive(true);
         resultUi.Clear();
         Stop();
+    }
+    public void SelectChar()
+    {
+        characters.SetActive(true);
     }
 }

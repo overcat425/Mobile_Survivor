@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     Animator anim;
 
     public WeaponFlip[] hand;
+    public RuntimeAnimatorController[] animCon;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -20,6 +21,11 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         scanner = GetComponent<EnemyScanner>();
         hand = GetComponentsInChildren<WeaponFlip>(true);
+    }
+    private void OnEnable()
+    {
+        speed *= Character.Speed;       // 캐릭터별 이동속도 부여
+        anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
     }
     void OnMove(InputValue value)
     {
