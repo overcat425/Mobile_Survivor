@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
+    private void Start()
+    {
+        SoundManager.instance.PlayBgm(false);
+    }
     public void GameStart(int id)
     {
         playerId = id;
@@ -51,7 +55,7 @@ public class GameManager : MonoBehaviour
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine("GoMenu");
     }
     void Update()
     {
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
         resultUi.gameObject.SetActive(true);
         resultUi.Defeat();
         Stop();
-        SoundManager.instance.PlayBgm(false);
+        SoundManager.instance.StopBgm(true);
         SoundManager.instance.PlayEffect(SoundManager.Effect.GameOver);
     }
     IEnumerator ClearAnim()
@@ -107,8 +111,13 @@ public class GameManager : MonoBehaviour
         resultUi.gameObject.SetActive(true);
         resultUi.Clear();
         Stop();
-        SoundManager.instance.PlayBgm(false);
+        SoundManager.instance.StopBgm(true);
         SoundManager.instance.PlayEffect(SoundManager.Effect.Win);
+    }
+    IEnumerator GoMenu()
+    {       // 이미 Gameover나 Win으로 timescale이 0이므로 Realtime사용
+        yield return new WaitForSecondsRealtime(0.4f);
+        SceneManager.LoadScene(0);
     }
     public void SelectChar()
     {

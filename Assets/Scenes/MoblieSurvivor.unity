@@ -698,6 +698,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1060340090}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ClickBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &86079147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14407,7 +14419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e6d3fab3dbb845a4ba69a419a0d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: fe6f2c9b0af10ff489f2ab3961f310ac, type: 3}
+  bgmClips:
+  - {fileID: 8300000, guid: fe6f2c9b0af10ff489f2ab3961f310ac, type: 3}
+  - {fileID: 8300000, guid: 570bce839e4d0394190ebdea0b1c6354, type: 3}
   bgmVolume: 0.3
   effClips:
   - {fileID: 8300000, guid: dbb917162e992f146988c7fb491de8b8, type: 3}
@@ -14420,7 +14434,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 04df9e00ae2a92d47897606a5e1fc9c1, type: 3}
   - {fileID: 8300000, guid: f12594df1fda6b14ea365afff2028077, type: 3}
   - {fileID: 8300000, guid: 308db1356a0542241a543d41face0199, type: 3}
-  - {fileID: 8300000, guid: c14c84e161dda7c4bba8f6ec5d1cba9c, type: 3}
+  - {fileID: 8300000, guid: 5a1972dd86387fa4b8773982f9eea83f, type: 3}
   - {fileID: 8300000, guid: 09572bdf22d969a4cb57f853c04c4cd4, type: 3}
   effVolume: 0.5
   channels: 16
@@ -20421,6 +20435,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1060340090}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ClickBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 113616300}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: MainMenu

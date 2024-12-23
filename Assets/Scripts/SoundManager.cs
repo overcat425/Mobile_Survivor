@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     [Header("BGM")]
-    public AudioClip bgmClip;
+    public AudioClip[] bgmClips;
     public float bgmVolume;
-    AudioSource bgmSource;
-    AudioSource mainSource;
+    AudioSource[] bgmSources;
     AudioHighPassFilter bgmHighPassFilter;
 
     [Header("EFFECT")]
@@ -28,18 +28,21 @@ public class SoundManager : MonoBehaviour
     void Init()         // 소리 초기화
     {
         GameObject bgmObject = new GameObject("BgmSource");
-        bgmObject.transform.parent = transform;
-        bgmSource = bgmObject.AddComponent<AudioSource>();
-        bgmSource.playOnAwake = false;
-        bgmSource.loop = true;
-        bgmSource.volume = bgmVolume;
-        bgmSource.clip = bgmClip;
+        bgmObject.transform.parent = transform;     // 자식으로 배치
+        bgmSources = new AudioSource[2];
+        for (int i = 0; i < bgmSources.Length; i++)
+        {
+            bgmSources[i] = bgmObject.AddComponent<AudioSource>();
+            bgmSources[i].playOnAwake = false;
+            bgmSources[i].loop = true;
+            bgmSources[i].volume = bgmVolume;
+            bgmSources[i].clip = bgmClips[i];
+        }
         bgmHighPassFilter = Camera.main.GetComponent<AudioHighPassFilter>();
 
         GameObject effObject = new GameObject("EffSource");
         effObject.transform.parent = transform;
         effSources = new AudioSource[channels];
-
         for (int i = 0; i < effSources.Length; i++)
         {
             effSources[i] = effObject.AddComponent<AudioSource>();
@@ -53,7 +56,7 @@ public class SoundManager : MonoBehaviour
         for (int i = 0; i < effSources.Length; ++i)
         {
             int loopChannel = (i + channel) % effSources.Length;
-            if (effSources[loopChannel].isPlaying)
+            if (effSources[loopChannel].isPlaying)      // 같은 오디오컴포넌트 사용 방지
                 continue;
             int randSound = 0;      // 랜덤사운드
             if (effect == Effect.Hit || effect == Effect.Melee)
@@ -70,14 +73,20 @@ public class SoundManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            bgmSource.Play();
+            bgmSources[1].Stop();
+            bgmSources[0].Play();
         }else
         {
-            bgmSource.Stop();
+            bgmSources[0].Stop();
+            bgmSources[1].Play();
         }
     }
     public void StopBgm(bool isPlaying)
     {
         bgmHighPassFilter.enabled = isPlaying;
+    }
+    public void ClickBtn()
+    {
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Click);
     }
 }
