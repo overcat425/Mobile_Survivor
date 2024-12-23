@@ -74,7 +74,9 @@ public class Enemy : MonoBehaviour
             if (health > 0)
             {
                 anim.SetTrigger("Hit");
-            }else
+                SoundManager.instance.PlayEffect(SoundManager.Effect.Hit);
+            }
+            else
             {
                 isDie = true;
                 collider.enabled = false;
@@ -84,6 +86,11 @@ public class Enemy : MonoBehaviour
                 //Dead();
                 GameManager.instance.kills++;
                 GameManager.instance.GetExp();
+
+                if (GameManager.instance.isLive)
+                {
+                    SoundManager.instance.PlayEffect(SoundManager.Effect.Die);
+                }
             }
         }
     }

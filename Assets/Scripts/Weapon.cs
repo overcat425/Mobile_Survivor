@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour
                     if (timer > speed)
                     {
                         Fire();
-                        //Debug.Log("time : " + timer);
+                        //Debug.Log("time : " + timer);     // Test sc.
                         //Debug.Log("speed : " + speed);
                         //Debug.Log("발사");
                         timer = 0f;
@@ -37,7 +37,6 @@ public class Weapon : MonoBehaviour
                     break;
             }
         }
-
     }
     public void Init(ItemData data)
     {
@@ -106,6 +105,7 @@ public class Weapon : MonoBehaviour
             bullet.position = transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 목표에 맞게 총알 회전
             bullet.GetComponent<Bullet>().Init(damage, count, dir);
+            SoundManager.instance.PlayEffect(SoundManager.Effect.Range);
         }
     }
     public void LvUp(float damage, int count)

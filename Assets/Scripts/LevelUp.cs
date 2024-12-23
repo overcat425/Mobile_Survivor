@@ -43,11 +43,15 @@ public class LevelUp : MonoBehaviour
         RandomItem();
         rect.localScale = Vector3.one;
         GameManager.instance.Stop();
+        SoundManager.instance.PlayEffect(SoundManager.Effect.LvUp);
+        SoundManager.instance.StopBgm(true);
     }
     public void Hide()
     {
         rect.localScale = Vector3.zero;
         GameManager.instance.Resume();
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
+        SoundManager.instance.StopBgm(false);
     }
     public void InitAttack(int i)
     {

@@ -44,8 +44,9 @@ public class Equipment : MonoBehaviour
                     weapon.speed = speed + (speed * rate);
                     break;
                 default:
-                    speed = 0.5f * Character.AttackRate;
+                    speed = 0.3f * Character.AttackRate;
                     weapon.speed = speed * (1f - rate);
+                    //Debug.Log("감소한 시간 : " + speed + " * (1 - " + rate + ") = " + weapon.speed); // Test sc.
                     break;
             }
         }

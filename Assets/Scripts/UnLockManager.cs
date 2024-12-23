@@ -78,6 +78,7 @@ public class UnLockManager : MonoBehaviour
     IEnumerator Notice()
     {
         notice.SetActive(true);     // 알림ON
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Notice);
         yield return wait;           // 5초후
         notice.SetActive(false);    // 알림OFF
     }

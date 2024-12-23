@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
         player.gameObject.SetActive(true);
         lvupUi.InitAttack(playerId % 2);
         Resume();
+
+        SoundManager.instance.PlayBgm(true);
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
     }
     public void GameOver()
     {
@@ -93,6 +96,8 @@ public class GameManager : MonoBehaviour
         resultUi.gameObject.SetActive(true);
         resultUi.Defeat();
         Stop();
+        SoundManager.instance.PlayBgm(false);
+        SoundManager.instance.PlayEffect(SoundManager.Effect.GameOver);
     }
     IEnumerator ClearAnim()
     {
@@ -102,6 +107,8 @@ public class GameManager : MonoBehaviour
         resultUi.gameObject.SetActive(true);
         resultUi.Clear();
         Stop();
+        SoundManager.instance.PlayBgm(false);
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Win);
     }
     public void SelectChar()
     {

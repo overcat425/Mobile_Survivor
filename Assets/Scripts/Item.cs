@@ -47,7 +47,7 @@ public class Item : MonoBehaviour
     {
         switch (data.itemType)
         {
-            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Melee:       // 근접, 원거리 데미지
             case ItemData.ItemType.Range:
                 if(level == 0)
                 {
@@ -66,7 +66,7 @@ public class Item : MonoBehaviour
                 }
                 level++;
                 break;
-            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Glove:       // 연사, 이동속도
             case ItemData.ItemType.Shoe:
                 if ( level == 0)
                 {
