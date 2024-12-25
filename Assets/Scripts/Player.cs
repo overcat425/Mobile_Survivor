@@ -31,7 +31,6 @@ public class Player : MonoBehaviour
     {
         inputVec = value.Get<Vector2>();
     }
-
     private void FixedUpdate()
     {
         if(GameManager.instance.isLive == true)

@@ -8,17 +8,19 @@ public class EnemySpawner : MonoBehaviour
     public Transform[] spawnPoint;
     float timer;
     int level;
+    public float timeForLevel;
 
     void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
+        timeForLevel = GameManager.instance.maxGameTime / spawnData.Length;
     }
     void Update()
     {
         if (GameManager.instance.isLive == true)
         {
             timer += Time.deltaTime;
-            level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10f), spawnData.Length -1);
+            level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / timeForLevel), spawnData.Length -1);
             if(timer > spawnData[level].spawnTime)
             {
                 Spawn();

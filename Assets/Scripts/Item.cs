@@ -59,7 +59,6 @@ public class Item : MonoBehaviour
                 {
                     float nextDamage = data.baseDamage;
                     int nextCount = 0;
-
                     nextDamage += data.baseDamage * data.damageUp[level];
                     nextCount += data.countUp[level];
                     weapon.LvUp(nextDamage, nextCount);         // 레벨업시 실질적으로 적용되는곳

@@ -34,7 +34,6 @@ public class EnemySpawnPool : MonoBehaviour
             active = Instantiate(enemyObject[i], transform);
             enemyPool[i].Add(active);
         }
-
         return active;
     }
 }

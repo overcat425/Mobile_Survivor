@@ -86,8 +86,7 @@ public class Weapon : MonoBehaviour
             }
             bullet.localPosition = Vector3.zero; // bullet의 위치를 플레이어로 초기화
             bullet.localRotation = Quaternion.identity;
-            bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // 근접무기라 사용횟수 무한(-1)
-
+            bullet.GetComponent<Bullet>().Init(damage, -10, Vector3.zero); // 근접무기라 사용횟수 무한으로 설정(-10)
             Vector3 rotate = Vector3.forward * 360 * i / count;
             bullet.Rotate(rotate);
             bullet.Translate(bullet.up * 1.5f, Space.World);

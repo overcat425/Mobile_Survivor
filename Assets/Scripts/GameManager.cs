@@ -20,14 +20,17 @@ public class GameManager : MonoBehaviour
 
     [Header("Control")]
     public float gameTime;
-    public float maxGameTime = 2 * 10f;
+    public float maxGameTime;
     public bool isLive;
     public GameResult resultUi;
     public GameObject enemyCleaner;
+    public GameObject mainBtn;
     public GameObject characters;
+    public Transform joyStick;
     private void Awake()
     {
         instance = this;
+        Application.targetFrameRate = 60;
     }
     private void Start()
     {
@@ -87,11 +90,13 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0;
+        joyStick.localScale = Vector3.zero;
     }
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1;
+        joyStick.localScale = Vector3.one;
     }
     IEnumerator DyingAnim()
     {
@@ -121,6 +126,17 @@ public class GameManager : MonoBehaviour
     }
     public void SelectChar()
     {
+        mainBtn.SetActive(false);
         characters.SetActive(true);
+    }
+    public void GoBack()
+    {
+        characters.SetActive(false);
+        mainBtn.SetActive(true);
+
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
