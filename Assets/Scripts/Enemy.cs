@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     public float speed;
     public float health;
     public float maxHealth;
+    public Transform pos;
 
     public Rigidbody2D target;
     bool isDie;
@@ -17,6 +19,8 @@ public class Enemy : MonoBehaviour
     SpriteRenderer sprite;
     Animator anim;
     WaitForFixedUpdate wait;
+
+    public GameObject expItem;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -83,10 +87,9 @@ public class Enemy : MonoBehaviour
                 rigid.simulated = false;
                 sprite.sortingOrder = 1;
                 anim.SetBool("Dead", true);
-                //Dead();
+                //Dead();     // 애니메이터에서 이벤트함수로 넣음
                 GameManager.instance.kills++;
-                GameManager.instance.GetExp();
-
+                Drop();
                 if (GameManager.instance.isLive)
                 {
                     SoundManager.instance.PlayEffect(SoundManager.Effect.Die);
@@ -104,5 +107,10 @@ public class Enemy : MonoBehaviour
     void Dead()
     {
         gameObject.SetActive(false);
+    }
+    void Drop()
+    {
+        GameObject coin = GameManager.instance.enemySpawnPool.Spawn(3);
+        coin.transform.position = pos.position;
     }
 }

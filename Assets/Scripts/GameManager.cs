@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public static GameManager instance;
     public EnemySpawnPool enemySpawnPool;
+    public ExpItemPool expItemPool;
     public LevelUp lvupUi;
     [Header("PlayerInfo")]
     public int level;
@@ -27,6 +29,16 @@ public class GameManager : MonoBehaviour
     public GameObject mainBtn;
     public GameObject characters;
     public Transform joyStick;
+
+    [Header("Exp")]
+    public GameObject expPrefab;
+    public Transform expParent;
+    public Transform expStart;
+    public Transform expEnd;
+    public int particleAmount;
+    public float particleDelay;
+    public float moveDuration;
+    public Ease moveEase;
     private void Awake()
     {
         instance = this;
@@ -77,6 +89,11 @@ public class GameManager : MonoBehaviour
     {
         if (isLive == true)
         {
+            for(int i = 0; i < particleAmount; i++)
+            {
+                var targetDelay = i * particleDelay;
+                GetExpItem(targetDelay);
+            }
             exp++;
             if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
             {
@@ -85,6 +102,14 @@ public class GameManager : MonoBehaviour
                 lvupUi.Show();
             }
         }
+    }
+    public void GetExpItem(float delay)
+    {
+        var expItem = expItemPool.GetExpItem(0);
+        var randomPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);
+        Vector3 startPos = randomPos + expStart.transform.position;
+        expItem.transform.position = startPos;
+        expItem.transform.DOMove(expEnd.position, moveDuration).SetEase(moveEase).SetDelay(delay);
     }
     public void Stop()
     {

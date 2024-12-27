@@ -27,7 +27,7 @@ public class HUD : MonoBehaviour
                 slider.value = nowExp / maxExp;
                 break;
             case UiType.Level:
-                text.text = string.Format("Level : {0:F0}", GameManager.instance.level);
+                text.text = string.Format("Level : {0:F0}", GameManager.instance.level + 1);
                 break;
             case UiType.Kills:
                 text.text = string.Format("{0:F0}", GameManager.instance.kills);

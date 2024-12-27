@@ -21,6 +21,10 @@ public class EnemySpawner : MonoBehaviour
         {
             timer += Time.deltaTime;
             level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / timeForLevel), spawnData.Length -1);
+            Debug.Log("1 : " + GameManager.instance.gameTime);
+            Debug.Log("Timeforlevel : " + timeForLevel);
+            Debug.Log("2 : "+ (spawnData.Length - 1));
+            Debug.Log("3 : "+ level);
             if(timer > spawnData[level].spawnTime)
             {
                 Spawn();

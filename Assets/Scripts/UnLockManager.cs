@@ -55,13 +55,13 @@ public class UnLockManager : MonoBehaviour
     void CheckUnlock(Unlock unlock)
     {
         bool isUnlock = false;
-        switch (unlock)
+        switch (unlock)                     // 해금 조건
         {
-            case Unlock.UnlockSergeant:
-                isUnlock = GameManager.instance.gameTime == GameManager.instance.maxGameTime;
+            case Unlock.UnlockSergeant:         // 킬 조건 달성시
+                isUnlock = GameManager.instance.kills >= 500;
                 break;
-            case Unlock.UnlockGeneral:
-                isUnlock = GameManager.instance.kills >= 100;
+            case Unlock.UnlockGeneral:          // 1회 클리어시
+                isUnlock = GameManager.instance.gameTime == GameManager.instance.maxGameTime;
                 break;
         }
         if (isUnlock && PlayerPrefs.GetInt(unlock.ToString()) == 0) // 해금 조건 달성하면
@@ -75,7 +75,7 @@ public class UnLockManager : MonoBehaviour
             StartCoroutine("Notice");
         }
     }
-    IEnumerator Notice()
+    IEnumerator Notice()            // 캐릭터 해금 알림
     {
         notice.SetActive(true);     // 알림ON
         SoundManager.instance.PlayEffect(SoundManager.Effect.Notice);

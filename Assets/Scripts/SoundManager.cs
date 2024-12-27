@@ -18,7 +18,7 @@ public class SoundManager : MonoBehaviour
     AudioSource[] effSources;
     public int channels;
     int channel;
-    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice }
+    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin }
 
     private void Awake()
     {
