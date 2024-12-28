@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     Player player;
     void Awake()
     {
-        player = GameManager.instance.player;
+        player = GameManager.instance.player;       // 플레이어 초기화
     }
     void Update()
     {
@@ -21,10 +21,10 @@ public class Weapon : MonoBehaviour
         {
             switch (id)
             {
-                case 0:
+                case 0:         // 근접무기는 속도에 따라 회전
                     transform.Rotate(Vector3.back * speed * Time.deltaTime);
                     break;
-                default:
+                default:        // 원거리는 발사속도에 따라 발사
                     timer += Time.deltaTime;
                     if (timer > speed)
                     {
@@ -43,7 +43,6 @@ public class Weapon : MonoBehaviour
         name = "Weapon " + data.itemId;
         transform.parent = player.transform;
         transform.localPosition = Vector3.zero;
-
         id = data.itemId;
         damage = data.baseDamage * Character.Damage;
         count = data.baseCount;

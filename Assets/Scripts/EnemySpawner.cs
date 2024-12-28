@@ -8,25 +8,19 @@ public class EnemySpawner : MonoBehaviour
     public Transform[] spawnPoint;
     float timer;
     int level;
-    public float timeForLevel;
 
     void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
-        timeForLevel = GameManager.instance.maxGameTime / spawnData.Length;
     }
     void Update()
     {
         if (GameManager.instance.isLive == true)
-        {
+        {                                       // level : 적 난이도 조절용 웨이브레벨
             timer += Time.deltaTime;
-            level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / timeForLevel), spawnData.Length -1);
-            Debug.Log("1 : " + GameManager.instance.gameTime);
-            Debug.Log("Timeforlevel : " + timeForLevel);
-            Debug.Log("2 : "+ (spawnData.Length - 1));
-            Debug.Log("3 : "+ level);
+            level = Mathf.FloorToInt(5 - ((GameManager.instance.maxGameTime - GameManager.instance.gameTime) / 120));
             if(timer > spawnData[level].spawnTime)
-            {
+            {                           // 아직 진행중이면 적 오브젝트 소환
                 Spawn();
                 timer = 0f;
             }
@@ -34,13 +28,30 @@ public class EnemySpawner : MonoBehaviour
     }
     void Spawn()
     {
-        GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
-        enemy.transform.position = spawnPoint[Random.Range(1,spawnPoint.Length)].position;
-        enemy.GetComponent<Enemy>().GetInfo(spawnData[level]);
+        switch (level)  // 웨이브레벨이 1이면 기본 몬스터만 소환하고, 2부터는 몬스터가 더 많이 출몰(DoubleSpawn())
+        {
+            case 0:
+                GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
+                enemy.transform.position = spawnPoint[Random.Range(1,spawnPoint.Length)].position;
+                enemy.GetComponent<Enemy>().GetInfo(spawnData[level]);
+                break;
+            default:
+                DoubleSpawn();
+                break;
+        }
+    }
+    void DoubleSpawn()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
+            enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+            enemy.GetComponent<Enemy>().GetInfo(spawnData[level - i]);
+        }
     }
 }
 [System.Serializable]
-public class SpawnData
+public class SpawnData              // 적 오브젝트 속성타입 직렬화클래스
 {
     public int Type;
     public float spawnTime;

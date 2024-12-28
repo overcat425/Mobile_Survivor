@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnLockManager : MonoBehaviour
+public class UnLockManager : MonoBehaviour          // 해금 스크립트
 {
     public GameObject[] lockedCharacter;
     public GameObject[] unlockedCharacter;
     public GameObject notice;
 
     WaitForSecondsRealtime wait;
-    enum Unlock { UnlockSergeant, UnlockGeneral }
+    enum Unlock { UnlockSergeant, UnlockGeneral }   // 병장,간부 열거
     Unlock[] unlocks;
     private void Awake()
     {
@@ -22,7 +22,6 @@ public class UnLockManager : MonoBehaviour
             Init();
         }
     }
-
     private void Init()
     {
         PlayerPrefs.SetInt("GameData", 1);
@@ -57,10 +56,10 @@ public class UnLockManager : MonoBehaviour
         bool isUnlock = false;
         switch (unlock)                     // 해금 조건
         {
-            case Unlock.UnlockSergeant:         // 킬 조건 달성시
-                isUnlock = GameManager.instance.kills >= 500;
+            case Unlock.UnlockSergeant:         // 킬 조건 달성시 병장 해금
+                isUnlock = GameManager.instance.kills >= 1000;
                 break;
-            case Unlock.UnlockGeneral:          // 1회 클리어시
+            case Unlock.UnlockGeneral:          // 1회 클리어시 간부 해금 ( 킬수로는 3000킬 예상 )
                 isUnlock = GameManager.instance.gameTime == GameManager.instance.maxGameTime;
                 break;
         }

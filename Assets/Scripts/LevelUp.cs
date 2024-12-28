@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class LevelUp : MonoBehaviour
 {
     RectTransform rect;
+    public RectTransform selectPane;
     Item[] items;
     void Awake()
     {
         rect = GetComponent<RectTransform>();
         items =GetComponentsInChildren<Item>(true);
     }
-    void RandomItem()
+    void RandomItem()       // 레벨업시 강화 가능한 카테고리중 3개 랜덤으로 뽑음
     {
         foreach (Item item in items){
             item.gameObject.SetActive(false);
@@ -39,17 +41,20 @@ public class LevelUp : MonoBehaviour
             }
         }
     }
-    public void Show()
+    public void Show()          // 레벨업 UI 전시
     {
-        RandomItem();
+        GameManager.instance.isHitable = false;
         rect.localScale = Vector3.one;
-        GameManager.instance.Stop();
+        RandomItem();
+        StartCoroutine("Anim");
         SoundManager.instance.PlayEffect(SoundManager.Effect.LvUp);
         SoundManager.instance.StopBgm(true);
     }
-    public void Hide()
+    public void Hide()          // 레벨업 UI 숨김
     {
+        GameManager.instance.isHitable = true;
         rect.localScale = Vector3.zero;
+        selectPane.localScale = Vector3.zero;
         GameManager.instance.Resume();
         SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
         SoundManager.instance.StopBgm(false);
@@ -57,5 +62,11 @@ public class LevelUp : MonoBehaviour
     public void InitAttack(int i)
     {
         items[i].OnClick();
+    }
+    IEnumerator Anim()              // 레벨업 강화창 팝업이벤트
+    {
+        selectPane.DOScale(1f,0.6f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(0.6f);
+        GameManager.instance.Stop();
     }
 }

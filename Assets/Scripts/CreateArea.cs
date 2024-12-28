@@ -18,7 +18,7 @@ public class CreateArea : MonoBehaviour
             //Vector3 playerDir = GameManager.instance.player.inputVec;
             switch (transform.tag)
             {
-                case "Ground":          // 맵 재배치
+                case "Ground":          // 플레이어 이동에 따른 맵 재배치
                     float diffX = playerPos.x - myPos.x;
                     float diffY = playerPos.y - myPos.y;
                     float dirX = diffX < 0 ? -1 : 1;
@@ -27,7 +27,7 @@ public class CreateArea : MonoBehaviour
                     diffY = Mathf.Abs(diffY);
                     if (diffX > diffY)
                     {
-                        transform.Translate(Vector3.right * dirX * 40); // 맵이 3X3에 20칸이므로 2칸씩 가야함 -> 20x2 = 40
+                        transform.Translate(Vector3.right * dirX * 40); // 맵이 2X2에 20칸이므로 2칸씩 가야함 -> 20x2 = 40
                     }else if (diffX < diffY)
                     {
                         transform.Translate(Vector3.up * dirY * 40);

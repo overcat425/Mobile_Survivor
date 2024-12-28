@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExpItemPool : MonoBehaviour
+public class ExpItemPool : MonoBehaviour        // 경험치 구슬 풀링 클래스
 {
     public GameObject[] expObject;    // 프리팹
 

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage;
-    public int per;
+    public float damage;        // 총알 데미지
+    public int per;                 // 총알 관통력
     Rigidbody2D rigid;
     private void Awake()
     {
@@ -24,17 +24,17 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Enemy") || per == -10)
+        if (!collision.CompareTag("Enemy") || per == -10)   // per -10은 enemyCleaner
             return;
-        per--;
-        if(per <0)
+        per--;          // 충돌체가 Enemy면 관통횟수 -1
+        if(per <0)      // 관통횟수 다떨어지면 오브젝트 비활성화
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
-    {
+    {       // 총알이 일정거리 이상 벗어나면 비활성화
         if (!collision.CompareTag("Area") || per == -10)
             return;
         gameObject.SetActive(false);

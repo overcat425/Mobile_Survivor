@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Equipment : MonoBehaviour
 {
-    public ItemData.ItemType type;
+    public ItemData.ItemType type;      // 아이템 타입
     public float rate;
     public void Init(ItemData data)
     {
@@ -20,10 +20,10 @@ public class Equipment : MonoBehaviour
     {
         switch (type)
         {
-            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Glove:       // 장갑이면 공격속도증가
                 RateUp();
                 break;
-            case ItemData.ItemType.Shoe:
+            case ItemData.ItemType.Shoe:        // 신발이면 이동속도증가
                 SpeedUp();
                 break;
         }
@@ -35,18 +35,17 @@ public class Equipment : MonoBehaviour
     }
     void RateUp()
     {
-        Weapon[] weapons = transform.parent.GetComponentsInChildren<Weapon>();  // 처음 실행될때 플레이어가 갖고있는 모든 무기에 속성을 부여함 ; Line.17
+        Weapon[] weapons = transform.parent.GetComponentsInChildren<Weapon>();  // 처음 실행될때 플레이어가 갖고있는 모든 무기에 속성을 부여함
         foreach (Weapon weapon in weapons) {
             switch (weapon.id)
             {
-                case 0:
+                case 0:             // 근접공격이면 회전속도 증가
                     float speed = 150 * Character.AttackSpeed;
                     weapon.speed = speed + (speed * rate);
                     break;
-                default:
+                default:            // 원거리 공격이면 발사간격 감소
                     speed = 0.3f * Character.AttackRate;
                     weapon.speed = speed * (1f - rate);
-                    //Debug.Log("감소한 시간 : " + speed + " * (1 - " + rate + ") = " + weapon.speed); // Test sc.
                     break;
             }
         }

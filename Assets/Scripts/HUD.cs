@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+public class HUD : MonoBehaviour                // 캔버스에 UI 전시 스크립트
 {
     public enum UiType { Exp, Level, Kills, Time, Health }
     public UiType type;

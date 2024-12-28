@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     Animator anim;
     WaitForFixedUpdate wait;
 
-    public GameObject expItem;
+    public GameObject expItem;  // 경험치 구슬
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         if (GameManager.instance.isLive == true)
         {
             if (!isDie && !anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
-            {
+            {                           // 피격시 경직
                 Vector2 dirVec = target.position - rigid.position;
                 Vector2 chasingDir = dirVec.normalized * speed * Time.fixedDeltaTime;
                 rigid.MovePosition(rigid.position + chasingDir);
@@ -47,12 +47,12 @@ public class Enemy : MonoBehaviour
         if (GameManager.instance.isLive == true)
         {
             if (!isDie)
-            {
+            {               // 타겟을 항해 바라봄 (Flip)
                 sprite.flipX = target.position.x < rigid.position.x;
             }
         }
     }
-    void OnEnable()
+    void OnEnable()                 // Enemy가 비활성화였다가 다시 풀링됐을때 초기화
     {
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
         isDie = false;
@@ -71,17 +71,17 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet")&& !isDie)
+        if (collision.CompareTag("Bullet")&& !isDie)        // 총알에 피격시
         {
             health -= collision.GetComponent<Bullet>().damage;
             StartCoroutine("KnockBack");
-            if (health > 0)
+            if (health > 0)                         // 살아있으면 피격판정 후 효과음
             {
                 anim.SetTrigger("Hit");
                 SoundManager.instance.PlayEffect(SoundManager.Effect.Hit);
             }
             else
-            {
+            {                                       // 죽음
                 isDie = true;
                 collider.enabled = false;
                 rigid.simulated = false;
@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    IEnumerator KnockBack()
+    IEnumerator KnockBack()             // 넉백 코루틴
     {
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 knockbackDir = transform.position - playerPos;
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    void Drop()
+    void Drop()                 // 경험치 구슬 위치설정후 드랍
     {
         GameObject coin = GameManager.instance.enemySpawnPool.Spawn(3);
         coin.transform.position = pos.position;

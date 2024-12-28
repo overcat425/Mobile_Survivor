@@ -25,15 +25,15 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         speed *= Character.Speed;       // 캐릭터별 이동속도 부여
-        anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
+        anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];   // 캐릭터별 애니메이터
     }
     void OnMove(InputValue value)
     {
-        inputVec = value.Get<Vector2>();
+        inputVec = value.Get<Vector2>();        // 이동(조이스틱)
     }
     private void FixedUpdate()
     {
-        if(GameManager.instance.isLive == true)
+        if(GameManager.instance.isLive == true)         // 이동 ; 프레임 보정
         {
             Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
@@ -46,14 +46,14 @@ public class Player : MonoBehaviour
             anim.SetFloat("Speed", inputVec.magnitude);
             if (inputVec.x != 0)
             {
-                sprite.flipX = inputVec.x < 0;
+                sprite.flipX = inputVec.x < 0;      // 캐릭터 Flip
             }
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (GameManager.instance.isLive)            // 피격시 프레임수준에서 체력감소
-        {
+        if (GameManager.instance.isLive && GameManager.instance.isHitable == true)            // 피격시 프레임수준에서 체력감소
+        {               // 게임 진행중 + 무적이 아닐때만 피격시 데미지
             GameManager.instance.health -= Time.deltaTime * 10;
         }
         if (GameManager.instance.health < 0)            // 사망시 무기 비활성화 후 묘비애니메이션

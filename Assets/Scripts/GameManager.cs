@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public EnemySpawnPool enemySpawnPool;
     public ExpItemPool expItemPool;
     public LevelUp lvupUi;
+
     [Header("PlayerInfo")]
     public int level;
     public int kills;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime;
     public bool isLive;
+    public bool isHitable;      // 레벨업시 강화창 열리는  0.7초동안 무적
     public GameResult resultUi;
     public GameObject enemyCleaner;
     public GameObject mainBtn;
@@ -42,21 +44,20 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;           // 프레임 60 고정
+        isHitable = true;
     }
     private void Start()
     {
-        SoundManager.instance.PlayBgm(false);
+        SoundManager.instance.PlayBgm(false);       // 게임 시작시 평화로운 브금
     }
-    public void GameStart(int id)
+    public void GameStart(int id)   // 캐릭터 id 받아서 그 캐릭터로 시작
     {
         playerId = id;
         health = maxHealth;
-
         player.gameObject.SetActive(true);
         lvupUi.InitAttack(playerId % 2);
         Resume();
-
         SoundManager.instance.PlayBgm(true);
         SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
     }
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine("GoMenu");
     }
-    void Update()
+    void Update()               // 게임 진행시간
     {
         if (isLive == true)
         {
@@ -89,14 +90,14 @@ public class GameManager : MonoBehaviour
     {
         if (isLive == true)
         {
-            for(int i = 0; i < particleAmount; i++)
+            for(int i = 0; i < particleAmount; i++)     // 경험치구슬이 n개로 쪼개짐
             {
                 var targetDelay = i * particleDelay;
                 GetExpItem(targetDelay);
             }
             exp++;
             if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
-            {
+            {                                   // 레벨업 로직
                 level++;
                 exp = 0;
                 lvupUi.Show();
@@ -105,41 +106,41 @@ public class GameManager : MonoBehaviour
     }
     public void GetExpItem(float delay)
     {
-        var expItem = expItemPool.GetExpItem(0);
-        var randomPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);
+        var expItem = expItemPool.GetExpItem(0);   // 오브젝트 풀 리스트에서 활성화
+        var randomPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);  // 3개의 경험치 파편이 플레이어 근처에서 랜덤생성
         Vector3 startPos = randomPos + expStart.transform.position;
         expItem.transform.position = startPos;
         expItem.transform.DOMove(expEnd.position, moveDuration).SetEase(moveEase).SetDelay(delay);
-    }
-    public void Stop()
+    }                       // DoTween으로 목적지까지 추적효과
+    public void Stop()                  // 게임 정지
     {
         isLive = false;
         Time.timeScale = 0;
         joyStick.localScale = Vector3.zero;
     }
-    public void Resume()
+    public void Resume()                // 게임 재개
     {
         isLive = true;
         Time.timeScale = 1;
         joyStick.localScale = Vector3.one;
     }
-    IEnumerator DyingAnim()
+    IEnumerator DyingAnim()             // 게임오버 코루틴
     {
         isLive = false;
-        yield return new WaitForSeconds(0.5f);
         resultUi.gameObject.SetActive(true);
         resultUi.Defeat();
+        yield return new WaitForSeconds(1.5f);
         Stop();
         SoundManager.instance.StopBgm(true);
         SoundManager.instance.PlayEffect(SoundManager.Effect.GameOver);
     }
-    IEnumerator ClearAnim()
+    IEnumerator ClearAnim()             // 게임 클리어 코루틴
     {
         isLive = false;
         enemyCleaner.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
         resultUi.gameObject.SetActive(true);
         resultUi.Clear();
+        yield return new WaitForSeconds(1.5f);
         Stop();
         SoundManager.instance.StopBgm(true);
         SoundManager.instance.PlayEffect(SoundManager.Effect.Win);

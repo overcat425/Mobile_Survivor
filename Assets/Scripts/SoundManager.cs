@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviour
     public float effVolume;
     AudioSource[] effSources;
     public int channels;
-    int channel;
-    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin }
+    int channel;                        // 효과음 열거형 대잔치
+    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin, Bounce }
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
     {
         GameObject bgmObject = new GameObject("BgmSource");
         bgmObject.transform.parent = transform;     // 자식으로 배치
-        bgmSources = new AudioSource[2];
+        bgmSources = new AudioSource[2];        // 메인화면용, 던전용 브금 2개
         for (int i = 0; i < bgmSources.Length; i++)
         {
             bgmSources[i] = bgmObject.AddComponent<AudioSource>();
@@ -69,7 +69,7 @@ public class SoundManager : MonoBehaviour
                 break;
         }
     }
-    public void PlayBgm(bool isPlaying)
+    public void PlayBgm(bool isPlaying)     // 브금 선정
     {
         if (isPlaying)
         {

@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
         textInfo = texts[2];
         textName.text = data.itemName;
     }
-    private void OnEnable()
+    private void OnEnable()                 // 강화정보란
     {
         textLevel.text = "Lv." + (level);
         switch (data.itemType)
@@ -84,7 +84,7 @@ public class Item : MonoBehaviour
                 GameManager.instance.health = GameManager.instance.maxHealth;
                 break;
         }
-        if (level == data.damageUp.Length)
+        if (level == data.damageUp.Length)      // 강화레벨이 만렙이면 비활성화
         {
             GetComponent<Button>().interactable = false;
         }
