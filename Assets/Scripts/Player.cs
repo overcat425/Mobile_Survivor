@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class Player : MonoBehaviour
 
     public WeaponFlip[] hand;
     public RuntimeAnimatorController[] animCon;
+
+    [Header("피격 붉은화면")]
+    public Image bloodScreen;
+    public AnimationCurve curveBloodScreen;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -54,6 +59,7 @@ public class Player : MonoBehaviour
     {
         if (GameManager.instance.isLive && GameManager.instance.isHitable == true)            // 피격시 프레임수준에서 체력감소
         {               // 게임 진행중 + 무적이 아닐때만 피격시 데미지
+            StartCoroutine("BloodScreen");
             GameManager.instance.health -= Time.deltaTime * 10;
         }
         if (GameManager.instance.health < 0)            // 사망시 무기 비활성화 후 묘비애니메이션
@@ -64,6 +70,18 @@ public class Player : MonoBehaviour
             }
             anim.SetTrigger("Dead");
             GameManager.instance.GameOver();
+        }
+    }
+    IEnumerator BloodScreen()           // 피격 화면
+    {
+        float percent = 0;      // 1초동안 회복
+        while (percent < 1)
+        {                      // 빨간화면 알파값을 0에서 0.5(127)까지 변환
+            percent += Time.deltaTime;
+            Color color = bloodScreen.color;
+            color.a = Mathf.Lerp(0.15f, 0, curveBloodScreen.Evaluate(percent));
+            bloodScreen.color = color;
+            yield return null;
         }
     }
 }

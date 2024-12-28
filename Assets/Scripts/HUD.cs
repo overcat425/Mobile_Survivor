@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -24,7 +25,7 @@ public class HUD : MonoBehaviour                // 캔버스에 UI 전시 스크립트
             case UiType.Exp:
                 float nowExp = GameManager.instance.exp;
                 float maxExp = GameManager.instance.nextExp[Mathf.Min(GameManager.instance.level, GameManager.instance.nextExp.Length-1)];
-                slider.value = nowExp / maxExp;
+                slider.DOValue(nowExp/maxExp, 1f);
                 break;
             case UiType.Level:
                 text.text = string.Format("Level : {0:F0}", GameManager.instance.level + 1);

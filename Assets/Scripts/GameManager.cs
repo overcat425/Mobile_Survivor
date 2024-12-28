@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -41,6 +42,9 @@ public class GameManager : MonoBehaviour
     public float particleDelay;
     public float moveDuration;
     public Ease moveEase;
+
+    public Image expImage;
+    public AnimationCurve expGlow;
     private void Awake()
     {
         instance = this;
@@ -95,6 +99,7 @@ public class GameManager : MonoBehaviour
                 var targetDelay = i * particleDelay;
                 GetExpItem(targetDelay);
             }
+            StartCoroutine("ExpUpGlow");
             exp++;
             if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
             {                                   // 레벨업 로직
@@ -164,5 +169,17 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    IEnumerator ExpUpGlow()     // 경험치 획득시 경험치바 변색
+    {
+        float percent = 0;
+        while (percent < 1)
+        {
+            percent += Time.deltaTime;
+            Color color = expImage.color;
+            color.g = Mathf.Lerp(0.3f, 1, expGlow.Evaluate(percent));
+            expImage.color = color;
+            yield return null;
+        }
     }
 }
