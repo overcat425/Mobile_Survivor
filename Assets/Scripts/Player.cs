@@ -74,12 +74,13 @@ public class Player : MonoBehaviour
     }
     IEnumerator BloodScreen()           // 피격 화면
     {
-        float percent = 0;      // 1초동안 회복
-        while (percent < 1)
-        {                      // 빨간화면 알파값을 0에서 0.5(127)까지 변환
+        float percent = 0;      // 0.7초동안 회복
+        while (percent < 0.7f)
+        {                      // 빨간화면 알파값을 0에서 0.1(25)까지 변환
             percent += Time.deltaTime;
             Color color = bloodScreen.color;
-            color.a = Mathf.Lerp(0.15f, 0, curveBloodScreen.Evaluate(percent));
+            color.a = Mathf.Lerp(0f, 0.1f, curveBloodScreen.Evaluate(percent));
+            Debug.Log(color.a);
             bloodScreen.color = color;
             yield return null;
         }

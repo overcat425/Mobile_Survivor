@@ -27,11 +27,13 @@ public class GameManager : MonoBehaviour
     public float maxGameTime;
     public bool isLive;
     public bool isHitable;      // 레벨업시 강화창 열리는  0.7초동안 무적
+    public GameObject pauseUi;
     public GameResult resultUi;
     public GameObject enemyCleaner;
     public GameObject mainBtn;
     public GameObject characters;
     public Transform joyStick;
+    public int clickCount;
 
     [Header("Exp")]
     public GameObject expPrefab;
@@ -82,12 +84,16 @@ public class GameManager : MonoBehaviour
         if (isLive == true)
         {
             gameTime += Time.deltaTime;
-
+            StartCoroutine("Pause");
             if (gameTime > maxGameTime)     // 생존 성공
             {
                 gameTime = maxGameTime;
                 GameClear();
             }
+        }
+        else if (isLive == false)
+        {
+            StartCoroutine("DoubleClickQuit");
         }
     }
     public void GetExp()
@@ -128,6 +134,20 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Time.timeScale = 1;
         joyStick.localScale = Vector3.one;
+        pauseUi.SetActive(false);
+    }
+    IEnumerator Pause()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                pauseUi.SetActive(true);
+                joyStick.localScale = Vector3.zero;
+                Stop();
+            }
+        }
+        yield return null;
     }
     IEnumerator DyingAnim()             // 게임오버 코루틴
     {
@@ -164,7 +184,6 @@ public class GameManager : MonoBehaviour
     {
         characters.SetActive(false);
         mainBtn.SetActive(true);
-
     }
     public void QuitGame()
     {
@@ -177,9 +196,30 @@ public class GameManager : MonoBehaviour
         {
             percent += Time.deltaTime;
             Color color = expImage.color;
-            color.g = Mathf.Lerp(0.3f, 1, expGlow.Evaluate(percent));
+            color.g = Mathf.Lerp(0f, 1f, expGlow.Evaluate(percent));
             expImage.color = color;
             yield return null;
         }
+    }
+    IEnumerator DoubleClickQuit()           // 뒤로가기 더블터치시 종료
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                clickCount++;
+                if (!IsInvoking("DoubleClick")) Invoke("DoubleClick", 0.3f);    // 더블클릭 제한시간
+            }else if(clickCount == 2)
+            {
+                CancelInvoke("DoubleClick");
+                QuitGame();
+            }
+        }
+
+        yield return null;
+    }
+    public void DoubleClick()
+    {
+        clickCount = 0;
     }
 }
