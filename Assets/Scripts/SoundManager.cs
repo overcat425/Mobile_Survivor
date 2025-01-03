@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public float bgmVolume;
     AudioSource[] bgmSources;
     AudioHighPassFilter bgmHighPassFilter;
+    //AudioListener audioListener;
 
     [Header("EFFECT")]
     public AudioClip[] effClips;
@@ -20,10 +21,14 @@ public class SoundManager : MonoBehaviour
     int channel;                        // 효과음 열거형 대잔치
     public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin, Bounce }
 
+    [Header("Buttons")]
+    public GameObject muteBtn;
+    public GameObject unMuteBtn;
     private void Awake()
     {
         instance = this;
         Init();
+        if(AudioListener.volume==0) IsMute();
     }
     void Init()         // 소리 초기화
     {
@@ -87,6 +92,22 @@ public class SoundManager : MonoBehaviour
     }
     public void ClickBtn()
     {
-        SoundManager.instance.PlayEffect(SoundManager.Effect.Click);
+        instance.PlayEffect(Effect.Click);
+    }
+    public void ToggleMute()
+    {
+        //audioListener = Camera.main.GetComponent<AudioListener>();
+        if(AudioListener.volume > 0)
+        {
+            AudioListener.volume = 0;
+        }else
+        {
+            AudioListener.volume = 1;
+        }
+    }
+    public void IsMute()
+    {
+        muteBtn.SetActive(false);
+        unMuteBtn.SetActive(true);
     }
 }

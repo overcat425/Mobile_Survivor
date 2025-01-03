@@ -80,7 +80,6 @@ public class Player : MonoBehaviour
             percent += Time.deltaTime;
             Color color = bloodScreen.color;
             color.a = Mathf.Lerp(0f, 0.1f, curveBloodScreen.Evaluate(percent));
-            Debug.Log(color.a);
             bloodScreen.color = color;
             yield return null;
         }

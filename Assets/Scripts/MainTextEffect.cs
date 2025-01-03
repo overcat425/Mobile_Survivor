@@ -23,7 +23,7 @@ public class MainTextEffect : MonoBehaviour
             rect[i].DOAnchorPosY(50, 1.5f).SetEase(Ease.OutBounce);
         }
         if (btns.activeSelf == true)            // 유저가 이벤트 다 나오기 전에 광클해서 넘어가는경우 방지
-            Invoke("BounceSound", 0.5f);
+            Invoke("BounceSound", 0.6f);
         yield return new WaitForSeconds(1.5f);
         StartCoroutine("MainEffect2");
     }
@@ -35,7 +35,7 @@ public class MainTextEffect : MonoBehaviour
             rect[i].DOAnchorPosY(-10, 1f).SetEase(Ease.OutBounce);
         }
         if (btns.activeSelf == true)
-            Invoke("SlotSound", 0.35f);
+            Invoke("SlotSound", 0.4f);
         yield return new WaitForSeconds(1f);
         StartCoroutine("MainEffect3");
     }
@@ -44,7 +44,7 @@ public class MainTextEffect : MonoBehaviour
         rect[2].DOAnchorPosX(0, 1f);
         rect[2].DOAnchorPosY(-50, 1f).SetEase(Ease.OutBounce);
         if (btns.activeSelf == true)
-            Invoke("SlotSound", 0.35f);
+            Invoke("SlotSound", 0.4f);
         yield return null;
     }
     void BounceSound()

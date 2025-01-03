@@ -48,7 +48,7 @@ public class LevelUp : MonoBehaviour
         RandomItem();
         StartCoroutine("Anim");
         SoundManager.instance.PlayEffect(SoundManager.Effect.LvUp);
-        SoundManager.instance.StopBgm(true);
+        SoundManager.instance.StopBgm(true);    //false´Â Resume¿¡ ÀÖÀ½
     }
     public void Hide()          // ·¹º§¾÷ UI ¼û±è
     {
@@ -57,7 +57,6 @@ public class LevelUp : MonoBehaviour
         selectPane.localScale = Vector3.zero;
         GameManager.instance.Resume();
         SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
-        SoundManager.instance.StopBgm(false);
     }
     public void InitAttack(int i)
     {

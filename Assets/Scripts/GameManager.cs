@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
                 GameClear();
             }
         }
-        else if (isLive == false)
+        else if (isLive == false && pauseUi.activeSelf == false)
         {
             StartCoroutine("DoubleClickQuit");
         }
@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Time.timeScale = 1;
         joyStick.localScale = Vector3.one;
+        SoundManager.instance.StopBgm(false);
         pauseUi.SetActive(false);
     }
     IEnumerator Pause()
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKey(KeyCode.Escape))
             {
                 pauseUi.SetActive(true);
+                SoundManager.instance.StopBgm(true);
                 joyStick.localScale = Vector3.zero;
                 Stop();
             }
@@ -215,7 +217,6 @@ public class GameManager : MonoBehaviour
                 QuitGame();
             }
         }
-
         yield return null;
     }
     public void DoubleClick()
