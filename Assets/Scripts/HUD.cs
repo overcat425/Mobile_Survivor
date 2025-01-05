@@ -38,6 +38,7 @@ public class HUD : MonoBehaviour                // 캔버스에 UI 전시 스크립트
                 int sec = Mathf.FloorToInt(timeRemain % 60);
                 int min = Mathf.FloorToInt(timeRemain / 60);
                 text.text = string.Format("{0:D2}:{1:D2}", min, sec);
+                if(min<=0)text.color = Color.red;
                 break;
             case UiType.Health:
                 float nowHealth = GameManager.instance.health;

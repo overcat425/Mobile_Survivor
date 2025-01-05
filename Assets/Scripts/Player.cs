@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
+        GameManager.instance.vCam.Follow = this.transform;
         speed *= Character.Speed;       // 캐릭터별 이동속도 부여
         anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];   // 캐릭터별 애니메이터
     }

@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
+using Unity.VisualScripting;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
+    public CinemachineVirtualCamera vCam;
+
     public Player player;
     public static GameManager instance;
     public EnemySpawnPool enemySpawnPool;
+    public EnemySpawner enemySpawner;
     public ExpItemPool expItemPool;
     public LevelUp lvupUi;
 
@@ -44,9 +51,12 @@ public class GameManager : MonoBehaviour
     public float particleDelay;
     public float moveDuration;
     public Ease moveEase;
-
     public Image expImage;
     public AnimationCurve expGlow;
+
+    public Volume volume;
+    public Vignette vignette;
+
     private void Awake()
     {
         instance = this;
@@ -55,6 +65,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        volume.profile.TryGet(out vignette);
         SoundManager.instance.PlayBgm(false);       // 게임 시작시 평화로운 브금
     }
     public void GameStart(int id)   // 캐릭터 id 받아서 그 캐릭터로 시작

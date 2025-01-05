@@ -1,17 +1,28 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public RectTransform bossTextrect;
+    Transform bossTrans;
+
     public SpawnData[] spawnData;
     public Transform[] spawnPoint;
     float timer;
     int level;
+    public Rigidbody2D target;
+
 
     void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+    }
+    private void OnEnable()
+    {
+        Invoke("BossSpawn", 419f);      // 7분째에 보스출현
     }
     void Update()
     {
@@ -48,6 +59,36 @@ public class EnemySpawner : MonoBehaviour
             enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
             enemy.GetComponent<Enemy>().GetInfo(spawnData[level - i]);
         }
+    }
+    void BossSpawn()
+    {
+        GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+        enemy.GetComponent<Enemy>().GetInfo(spawnData[5]);
+        bossTrans = enemy.transform;
+        StartCoroutine("Boss");
+    }
+    IEnumerator Boss()
+    {
+        GameManager.instance.vignette.intensity.value = 1f;
+        StartCoroutine("BossText");
+        GameManager.instance.isLive = false;
+        GameManager.instance.vCam.Follow = bossTrans.transform;
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Boss);
+        yield return new WaitForSecondsRealtime(2.5f);
+        GameManager.instance.vCam.Follow = target.transform;
+        GameManager.instance.vignette.intensity.value = 0.44f;
+        GameManager.instance.isLive = true;
+    }
+    IEnumerator BossText()
+    {
+        bossTextrect.localScale = Vector3.one;
+        yield return new WaitForSeconds(0.5f);
+        bossTextrect.DOAnchorPosX(0, 0.7f).SetEase(Ease.OutSine);
+        yield return new WaitForSeconds(1.5f);
+        bossTextrect.DOAnchorPosX(140, 0.6f).SetEase(Ease.InSine);
+        yield return new WaitForSeconds(0.6f);
+        bossTextrect.localScale = Vector3.zero;
     }
 }
 [System.Serializable]
