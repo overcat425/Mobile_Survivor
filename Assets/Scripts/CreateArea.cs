@@ -11,11 +11,10 @@ public class CreateArea : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Area"))           // 자동생성맵 로직
+        if (collision.CompareTag("Area")&&GameManager.instance.health>0)           // 자동생성맵 로직
         {
             Vector3 playerPos = GameManager.instance.player.transform.position;
             Vector3 myPos = transform.position;
-            //Vector3 playerDir = GameManager.instance.player.inputVec;
             switch (transform.tag)
             {
                 case "Ground":          // 플레이어 이동에 따른 맵 재배치

@@ -53,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
     }
     void DoubleSpawn()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)     // 2가지 몬스터 + 2배로 출몰
         {
             GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
             enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
@@ -68,24 +68,24 @@ public class EnemySpawner : MonoBehaviour
         bossTrans = enemy.transform;
         StartCoroutine("Boss");
     }
-    IEnumerator Boss()
+    IEnumerator Boss()          // 보스 등장 씬
     {
-        GameManager.instance.vignette.intensity.value = 1f;
-        StartCoroutine("BossText");
+        GameManager.instance.vignette.intensity.value = 1f;  // 초점 포커스 연출
+        StartCoroutine("BossText");     // 텍스트액션
         GameManager.instance.isLive = false;
-        GameManager.instance.vCam.Follow = bossTrans.transform;
-        SoundManager.instance.PlayEffect(SoundManager.Effect.Boss);
-        yield return new WaitForSecondsRealtime(2.5f);
-        GameManager.instance.vCam.Follow = target.transform;
-        GameManager.instance.vignette.intensity.value = 0.44f;
+        GameManager.instance.vCam.Follow = bossTrans.transform; // 카메라->보스
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Boss); // 보스등장 이펙트사운드
+        yield return new WaitForSecondsRealtime(2.5f);              // 보스 2.5초동안 보여주기
+        GameManager.instance.vCam.Follow = target.transform;    // 다시 카메라->플레이어
+        GameManager.instance.vignette.intensity.value = 0.44f;      // 초점 포커스 풀기
         GameManager.instance.isLive = true;
     }
-    IEnumerator BossText()
+    IEnumerator BossText()          // 보스 등장시 텍스트액션
     {
         bossTextrect.localScale = Vector3.one;
         yield return new WaitForSeconds(0.5f);
         bossTextrect.DOAnchorPosX(0, 0.7f).SetEase(Ease.OutSine);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f);      // DoTween으로 효과 추가
         bossTextrect.DOAnchorPosX(140, 0.6f).SetEase(Ease.InSine);
         yield return new WaitForSeconds(0.6f);
         bossTextrect.localScale = Vector3.zero;

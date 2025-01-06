@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         health = maxHealth;
     }
     public void GetInfo(SpawnData data)     // 적 생성시 상태 초기화
-    {
+    {                                             // SpawnData 직렬클래스에서 받아옴
         anim.runtimeAnimatorController = animCtrl[data.Type];
         speed = data.speed;
         maxHealth = data.health;

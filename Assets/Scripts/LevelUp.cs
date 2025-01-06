@@ -43,29 +43,29 @@ public class LevelUp : MonoBehaviour
     }
     public void Show()          // 레벨업 UI 전시
     {
-        GameManager.instance.isHitable = false;
+        GameManager.instance.isHitable = false;     // 플레이어 피격 off
         rect.localScale = Vector3.one;
-        RandomItem();
+        RandomItem();                       // 랜덤아이템 뽑아주는 메소드
         StartCoroutine("Anim");
-        SoundManager.instance.PlayEffect(SoundManager.Effect.LvUp);
+        SoundManager.instance.PlayEffect(SoundManager.Effect.LvUp); // 레벨업 효과음
         SoundManager.instance.StopBgm(true);    //false는 Resume에 있음
     }
     public void Hide()          // 레벨업 UI 숨김
     {
-        GameManager.instance.isHitable = true;
+        GameManager.instance.isHitable = true;      // 플레이어 피격 on
         rect.localScale = Vector3.zero;
         selectPane.localScale = Vector3.zero;
-        GameManager.instance.Resume();
-        SoundManager.instance.PlayEffect(SoundManager.Effect.Select);
+        GameManager.instance.Resume();              
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Select);   // 효과음
+    }
+    IEnumerator Anim()              // 레벨업 강화창 팝업이벤트
+    {
+        selectPane.DOScale(1f,0.6f).SetEase(Ease.OutBounce);    // DoTween으로 선택창 펼치기
+        yield return new WaitForSeconds(0.6f);                  // DoTween 대기
+        GameManager.instance.Stop();                            // 시간 정지
     }
     public void InitAttack(int i)
     {
         items[i].OnClick();
-    }
-    IEnumerator Anim()              // 레벨업 강화창 팝업이벤트
-    {
-        selectPane.DOScale(1f,0.6f).SetEase(Ease.OutBounce);
-        yield return new WaitForSeconds(0.6f);
-        GameManager.instance.Stop();
     }
 }

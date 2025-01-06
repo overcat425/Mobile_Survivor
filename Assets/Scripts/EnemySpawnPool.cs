@@ -18,7 +18,6 @@ public class EnemySpawnPool : MonoBehaviour
     public GameObject Spawn(int i)  // 비활성화된 게임오브젝트 관리
     {
         GameObject active = null;       // 활성화 오브젝트 초기화
-
         foreach(GameObject item in enemyPool[i])
         {
             if (!item.activeSelf)   // 비활성화된 오브젝트가 있으면 active에 할당

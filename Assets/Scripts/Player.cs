@@ -57,8 +57,8 @@ public class Player : MonoBehaviour
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (GameManager.instance.isLive && GameManager.instance.isHitable == true)            // 피격시 프레임수준에서 체력감소
+    {                                                               // 피격시 프레임수준에서 체력감소
+        if (GameManager.instance.isLive && GameManager.instance.isHitable == true)
         {               // 게임 진행중 + 무적이 아닐때만 피격시 데미지
             StartCoroutine("BloodScreen");
             GameManager.instance.health -= Time.deltaTime * 10;
@@ -75,13 +75,13 @@ public class Player : MonoBehaviour
     }
     IEnumerator BloodScreen()           // 피격 화면
     {
-        float percent = 0;      // 0.7초동안 회복
+        float percent = 0;
         while (percent < 0.7f)
         {                      // 빨간화면 알파값을 0에서 0.1(25)까지 변환
             percent += Time.deltaTime;
             Color color = bloodScreen.color;
             color.a = Mathf.Lerp(0f, 0.1f, curveBloodScreen.Evaluate(percent));
-            bloodScreen.color = color;
+            bloodScreen.color = color;      //0부터 0.1까지 커브곡선 값을 받아 변경
             yield return null;
         }
     }

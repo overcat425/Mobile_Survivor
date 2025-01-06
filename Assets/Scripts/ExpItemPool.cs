@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExpItemPool : MonoBehaviour        // 경험치 구슬 풀링 클래스
 {
-    public GameObject[] expObject;    // 프리팹
+    public GameObject[] expObject;    // 경험치 프리팹
 
     List<GameObject>[] expPool;       // 풀 용도
     void Awake()

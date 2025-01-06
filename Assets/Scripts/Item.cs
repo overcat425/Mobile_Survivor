@@ -49,14 +49,14 @@ public class Item : MonoBehaviour
         {
             case ItemData.ItemType.Melee:       // 근접, 원거리 데미지
             case ItemData.ItemType.Range:
-                if(level == 0)
+                if(level == 0)                          // 안배웠으면 생성
                 {
                     GameObject newWeapon = new GameObject();
                     weapon = newWeapon.AddComponent<Weapon>();
                     weapon.Init(data);
                 }
                 else
-                {
+                {                                                           // 배웠으면 강화
                     float nextDamage = data.baseDamage;
                     int nextCount = 0;
                     nextDamage += data.baseDamage * data.damageUp[level];
@@ -67,20 +67,20 @@ public class Item : MonoBehaviour
                 break;
             case ItemData.ItemType.Glove:       // 연사, 이동속도
             case ItemData.ItemType.Shoe:
-                if ( level == 0)
+                if ( level == 0)                        // 안배웠으면 생성
                 {
                     GameObject newEquipment = new GameObject();
                     equipment = newEquipment.AddComponent<Equipment>();
                     equipment.Init(data);
                 }
                 else
-                {
+                {                                                       // 배웠으면 강화
                     float nextRate = data.damageUp[level];
                     equipment.EqLvUp(nextRate);
                 }
                 level++;
                 break;
-            case ItemData.ItemType.Heal:
+            case ItemData.ItemType.Heal:        // 체력 100% 회복
                 GameManager.instance.health = GameManager.instance.maxHealth;
                 break;
         }
