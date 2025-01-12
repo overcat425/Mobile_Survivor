@@ -40,11 +40,11 @@ public class Equipment : MonoBehaviour
             switch (weapon.id)
             {
                 case 0:             // 근접공격이면 회전속도 증가
-                    float speed = 150 * Character.AttackSpeed;
+                    float speed = 150;
                     weapon.speed = speed + (speed * rate);
                     break;
                 default:            // 원거리 공격이면 발사간격 감소
-                    speed = 0.3f * Character.AttackRate;
+                    speed = 0.3f;
                     weapon.speed = speed * (1f - rate);
                     break;
             }

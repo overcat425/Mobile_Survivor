@@ -57,11 +57,11 @@ public class Weapon : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150 * Character.AttackSpeed;
+                speed = 150;
                 WeaponCount();
                 break;
             default:
-                speed = 0.3f * Character.AttackRate;
+                speed = 0.3f;
                 break;
         }
         WeaponFlip hand = player.hand[(int)data.itemType];
@@ -93,16 +93,32 @@ public class Weapon : MonoBehaviour
     }
     void Fire()
     {
+        switch (Character.IsGun)
+        {
+            case 1:                 // 병장이면 샷건
+                BulletFire(0);
+                BulletFire(20);
+                BulletFire(-20);
+                break;
+            default:                // 그외 소총
+                BulletFire(0);
+                break;
+        }
+    }
+    void BulletFire(int i)
+    {
         if (player.scanner.nearest)
         {
             Vector3 targetPos = player.scanner.nearest.position;
             Vector3 dir = targetPos - transform.position; // 총알이 나갈 방향
-            dir = dir.normalized;
+            Quaternion rot = Quaternion.Euler(0, 0, i);
+            Vector3 aim = rot * dir;
+            aim = aim.normalized;
 
             Transform bullet = GameManager.instance.enemySpawnPool.Spawn(prefabId).transform;
             bullet.position = transform.position;
-            bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 목표에 맞게 총알 회전
-            bullet.GetComponent<Bullet>().Init(damage, count, dir);
+            bullet.rotation = Quaternion.FromToRotation(Vector3.up, aim); // 목표에 맞게 총알 회전
+            bullet.GetComponent<Bullet>().Init(damage, count, aim);
             SoundManager.instance.PlayEffect(SoundManager.Effect.Range);
         }
     }

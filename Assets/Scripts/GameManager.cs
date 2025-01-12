@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
 
     public Volume volume;
     public Vignette vignette;
-
     private void Awake()
     {
         instance = this;
