@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     public void GetExpItem(float delay)
     {
         var expItem = expItemPool.GetExpItem(0);   // 오브젝트 풀 리스트에서 활성화
-        var randomPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-50f, 50f), 0f);  // 플레이어 근처 랜덤좌표
+        var randomPos = new Vector3(Random.Range(-30f, 30f), Random.Range(-30f, 30f), 0f);  // 플레이어 근처 랜덤좌표
         Vector3 startPos = randomPos + expStart.transform.position; // 경험치 파편 생성지점에서 랜덤생성한 좌표를 더해 무작위로 튀어나오는 효과
         expItem.transform.position = startPos;
         expItem.transform.DOMove(expEnd.position, moveDuration).SetEase(moveEase).SetDelay(delay);

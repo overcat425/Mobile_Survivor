@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
 using UnityEngine.UI;
@@ -29,6 +30,16 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         wait = new WaitForFixedUpdate();
     }
+    void OnEnable()                 // Enemy가 비활성화였다가 다시 풀링됐을때 초기화
+    {
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        isDie = false;
+        collider.enabled = true;
+        rigid.simulated = true;
+        sprite.sortingOrder = 2;
+        anim.SetBool("Dead", false);
+        health = maxHealth;
+    }
     private void FixedUpdate()
     {
         if (GameManager.instance.isLive == true)
@@ -52,16 +63,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    void OnEnable()                 // Enemy가 비활성화였다가 다시 풀링됐을때 초기화
-    {
-        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
-        isDie = false;
-        collider.enabled = true;
-        rigid.simulated = true;
-        sprite.sortingOrder = 2;
-        anim.SetBool("Dead", false);
-        health = maxHealth;
-    }
+
     public void GetInfo(SpawnData data)     // 적 생성시 상태 초기화
     {                                             // SpawnData 직렬클래스에서 받아옴
         anim.runtimeAnimatorController = animCtrl[data.Type];

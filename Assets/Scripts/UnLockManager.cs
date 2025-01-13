@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class UnLockManager : MonoBehaviour          // 해금 스크립트
 {
+    WaitForSecondsRealtime wait;
+
+    public GameObject notice;
     public GameObject[] lockedCharacter;
     public GameObject[] unlockedCharacter;
-    public GameObject notice;
 
-    WaitForSecondsRealtime wait;
     enum Unlock { UnlockSergeant, UnlockGeneral }   // 병장,간부 열거
     Unlock[] unlocks;
     private void Awake()
@@ -51,24 +52,24 @@ public class UnLockManager : MonoBehaviour          // 해금 스크립트
             CheckUnlock(unlock);
         }
     }
-    void CheckUnlock(Unlock unlock)
+    void CheckUnlock(Unlock index)
     {
         bool isUnlock = false;
-        switch (unlock)                     // 해금 조건
+        switch (index)                     // 해금 조건
         {
             case Unlock.UnlockSergeant:         // 킬 조건 달성시 병장 해금
                 isUnlock = GameManager.instance.kills >= 1000;
                 break;
-            case Unlock.UnlockGeneral:          // 1회 클리어시 간부 해금 ( 킬수로는 3000킬 예상 )
+            case Unlock.UnlockGeneral:          // 1회 클리어시 간부 해금 ( 킬수로는 3~4000킬 예상 )
                 isUnlock = GameManager.instance.gameTime == GameManager.instance.maxGameTime;
                 break;
         }
-        if (isUnlock && PlayerPrefs.GetInt(unlock.ToString()) == 0) // 해금 조건 달성하면
+        if (isUnlock && PlayerPrefs.GetInt(index.ToString()) == 0) // 해금 조건 달성하면
         {
-            PlayerPrefs.SetInt(unlock.ToString(), 1);   // 해금했다고 저장
+            PlayerPrefs.SetInt(index.ToString(), 1);   // 해금했다고 저장
             for (int i = 0; i < notice.transform.childCount; i++)
             {
-                bool isActive = i == (int)unlock;       // 
+                bool isActive = i == (int)index;       // 
                 notice.transform.GetChild(i).gameObject.SetActive(isActive);
             }
             StartCoroutine("Notice");

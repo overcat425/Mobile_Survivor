@@ -61,7 +61,7 @@ public class Weapon : MonoBehaviour
                 WeaponCount();
                 break;
             default:
-                speed = 0.3f;
+                speed = 0.4f;
                 break;
         }
         WeaponFlip hand = player.hand[(int)data.itemType];
@@ -93,34 +93,33 @@ public class Weapon : MonoBehaviour
     }
     void Fire()
     {
-        switch (Character.IsGun)
+        if (player.scanner.nearest)
         {
-            case 1:                 // 병장이면 샷건
-                BulletFire(0);
-                BulletFire(20);
-                BulletFire(-20);
-                break;
-            default:                // 그외 소총
-                BulletFire(0);
-                break;
+            switch (Character.IsGun)
+            {
+                case 1:                 // 병장이면 샷건
+                    BulletFire(0);
+                    BulletFire(20);
+                    BulletFire(-20);
+                    break;
+                default:                // 그외 소총
+                    BulletFire(0);
+                    break;
+            }
+            SoundManager.instance.PlayEffect(SoundManager.Effect.Range);
         }
     }
     void BulletFire(int i)
     {
-        if (player.scanner.nearest)
-        {
-            Vector3 targetPos = player.scanner.nearest.position;
-            Vector3 dir = targetPos - transform.position; // 총알이 나갈 방향
-            Quaternion rot = Quaternion.Euler(0, 0, i);
-            Vector3 aim = rot * dir;
-            aim = aim.normalized;
-
-            Transform bullet = GameManager.instance.enemySpawnPool.Spawn(prefabId).transform;
-            bullet.position = transform.position;
-            bullet.rotation = Quaternion.FromToRotation(Vector3.up, aim); // 목표에 맞게 총알 회전
-            bullet.GetComponent<Bullet>().Init(damage, count, aim);
-            SoundManager.instance.PlayEffect(SoundManager.Effect.Range);
-        }
+        Vector3 targetPos = player.scanner.nearest.position;
+        Vector3 dir = targetPos - transform.position; // 총알이 나갈 방향
+        Quaternion rot = Quaternion.Euler(0, 0, i);
+        Vector3 aim = rot * dir;
+        aim = aim.normalized;
+        Transform bullet = GameManager.instance.enemySpawnPool.Spawn(prefabId).transform;
+        bullet.position = transform.position;
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up, aim); // 목표에 맞게 총알 회전
+        bullet.GetComponent<Bullet>().Init(damage, count, aim);
     }
     public void LvUp(float damage, int count)
     {

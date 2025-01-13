@@ -2,18 +2,20 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
     public RectTransform bossTextrect;
-    Transform bossTrans;
+    public Transform bossTrans;             // 보스에게 카메라 잠시 부착
+    public GameObject bossHp;
+    public GameObject bossObject;       // 보스 소환시에 태그를 달아놓고 그 보스오브젝트에서 체력값을 빼옴
 
     public SpawnData[] spawnData;
     public Transform[] spawnPoint;
     float timer;
     int level;
     public Rigidbody2D target;
-
 
     void Awake()
     {
@@ -66,6 +68,9 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
         enemy.GetComponent<Enemy>().GetInfo(spawnData[5]);
         bossTrans = enemy.transform;
+        bossObject = enemy;
+        enemy.AddComponent<HpUiScript>();
+        bossHp.SetActive(true);
         StartCoroutine("Boss");
     }
     IEnumerator Boss()          // 보스 등장 씬
@@ -82,13 +87,13 @@ public class EnemySpawner : MonoBehaviour
     }
     IEnumerator BossText()          // 보스 등장시 텍스트액션
     {
-        bossTextrect.localScale = Vector3.one;
+        bossTextrect.gameObject.SetActive(true);      // 텍스트 ON
         yield return new WaitForSeconds(0.5f);
         bossTextrect.DOAnchorPosX(0, 0.7f).SetEase(Ease.OutSine);
-        yield return new WaitForSeconds(1.5f);      // DoTween으로 효과 추가
+        yield return new WaitForSeconds(1.5f);      // DoTween으로 지나가는 효과
         bossTextrect.DOAnchorPosX(140, 0.6f).SetEase(Ease.InSine);
         yield return new WaitForSeconds(0.6f);
-        bossTextrect.localScale = Vector3.zero;
+        bossTextrect.gameObject.SetActive(false); // 텍스트 OFF
     }
 }
 [System.Serializable]

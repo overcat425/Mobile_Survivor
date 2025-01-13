@@ -44,7 +44,7 @@ public class Equipment : MonoBehaviour
                     weapon.speed = speed + (speed * rate);
                     break;
                 default:            // 원거리 공격이면 발사간격 감소
-                    speed = 0.3f;
+                    speed = 0.4f;
                     weapon.speed = speed * (1f - rate);
                     break;
             }

@@ -7,15 +7,16 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour                // 캔버스에 UI 전시 스크립트
 {
-    public enum UiType { Exp, Level, Kills, Time, Health }
+    public enum UiType { Exp, Level, Kills, Time, Health, Boss }
     public UiType type;
-
+    Transform bossHp;              // 보스체력바가 따라갈 좌표
     Text text;
     Slider slider;
     private void Awake()
     {
         text = GetComponent<Text>();
         slider = GetComponent<Slider>();
+        bossHp = GameManager.instance.enemySpawner.bossTrans;
     }
 
     void LateUpdate()
@@ -44,6 +45,14 @@ public class HUD : MonoBehaviour                // 캔버스에 UI 전시 스크립트
                 float nowHealth = GameManager.instance.health;
                 float maxHealth = GameManager.instance.maxHealth;
                 slider.value = nowHealth / maxHealth;
+                break;
+            case UiType.Boss:
+                HpUiScript bossScript = GameManager.instance.enemySpawner.bossObject.GetComponent<HpUiScript>();
+                float bossHealth = bossScript.bossHealth;
+                float maxBossHealth = bossScript.bossMaxHealth;
+                transform.position = Camera.main.WorldToScreenPoint(bossHp.position + new Vector3(0, 2f, 0));
+                slider.value = bossHealth / maxBossHealth;
+                if (bossHealth < 0) gameObject.SetActive(false);
                 break;
         }
     }
