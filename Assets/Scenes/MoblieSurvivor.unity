@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 81485613}
   - component: {fileID: 81485612}
   m_Layer: 5
-  m_Name: BossText
+  m_Name: EliteText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1001,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 98267701}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: -0.18, y: -0.23, z: 0}
+  m_LocalPosition: {x: -0.05, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2626,13 +2626,13 @@ RectTransform:
   - {fileID: 1392214734}
   - {fileID: 398322522}
   - {fileID: 6113497993029725381}
+  - {fileID: 81485611}
   - {fileID: 2003109979}
   - {fileID: 1164058531}
   - {fileID: 1441005128}
   - {fileID: 396916468}
   - {fileID: 835102991}
   - {fileID: 1077540739}
-  - {fileID: 81485611}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4008,7 +4008,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.425926
+  orthographic size: 10.972222
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4551,8 +4551,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: -0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 415412982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9741,29 +9741,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossTextrect: {fileID: 81485611}
-  bossTrans: {fileID: 0}
-  bossHp: {fileID: 6344016179943309194}
-  bossObject: {fileID: 0}
+  eliteTrans: {fileID: 0}
+  eliteHp: {fileID: 6344016179943309194}
+  eliteObject: {fileID: 0}
   spawnData:
   - Type: 0
-    spawnTime: 0.5
-    health: 20
+    spawnTime: 0.4
+    health: 15
     speed: 1.5
   - Type: 1
     spawnTime: 0.4
-    health: 30
+    health: 25
     speed: 1.8
   - Type: 2
     spawnTime: 0.3
-    health: 40
+    health: 30
     speed: 2
   - Type: 3
     spawnTime: 0.2
-    health: 50
+    health: 40
     speed: 2.2
   - Type: 4
     spawnTime: 0.2
-    health: 70
+    health: 60
     speed: 2.5
   - Type: 5
     spawnTime: 500
@@ -15506,13 +15506,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1ae860b7efbd742b55008761d12488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notice: {fileID: 835102990}
   lockedCharacter:
   - {fileID: 1912751620}
   - {fileID: 2011455893}
   unlockedCharacter:
   - {fileID: 984942400}
   - {fileID: 45269125}
-  notice: {fileID: 835102990}
 --- !u!4 &1098539093
 Transform:
   m_ObjectHideFlags: 0
@@ -29229,7 +29229,7 @@ GameObject:
   - component: {fileID: 3835605288396583796}
   - component: {fileID: 6344016179943309195}
   m_Layer: 5
-  m_Name: BossHealth
+  m_Name: EliteHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

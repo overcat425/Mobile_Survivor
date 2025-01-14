@@ -28,4 +28,4 @@ MonoBehaviour:
   - 1.5
   countUp: 0000000001000000020000000300000004000000
   projectile: {fileID: 27622808846319990, guid: 8372ad3a9e250594c852e9371ce7801a, type: 3}
-  hand: {fileID: -353751291, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  hand: {fileID: -761887118410055393, guid: 2edfd0eb34e1fa349824f67025b135d3, type: 3}

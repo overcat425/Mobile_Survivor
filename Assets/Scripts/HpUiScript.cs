@@ -7,15 +7,24 @@ public class HpUiScript : MonoBehaviour
 {
     public static HpUiScript instance;
     public Enemy enemy;
-    public float bossHealth;
-    public float bossMaxHealth;
+    public float eliteHealth;
+    public float eliteMaxHealth;
     private void Start()
     {
-        enemy = GetComponent<Enemy>();  // Boss에 달린 enemy스크립트
+        enemy = GetComponent<Enemy>();  // elite에 달린 enemy스크립트
     }
     void LateUpdate()
     {
-        bossHealth = enemy.health;
-        bossMaxHealth = enemy.maxHealth;
+        eliteHealth = enemy.health;
+        eliteMaxHealth = enemy.maxHealth;
+        if(eliteHealth < 0)
+        {
+            StartCoroutine("EliteDie");
+        }
+    }
+    IEnumerator EliteDie()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
     }
 }
