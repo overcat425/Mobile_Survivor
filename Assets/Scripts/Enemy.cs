@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
         sprite.sortingOrder = 2;
         anim.SetBool("Dead", false);
         health = maxHealth;
+        transform.localScale = Vector3.one; // 오프젝트풀링 리스트에 추가된 엘리트도 재활용
     }
     private void FixedUpdate()
     {
@@ -63,7 +64,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
     public void GetInfo(SpawnData data)     // 적 생성시 상태 초기화
     {                                             // SpawnData 직렬클래스에서 받아옴
         anim.runtimeAnimatorController = animCtrl[data.Type];
@@ -81,8 +81,7 @@ public class Enemy : MonoBehaviour
             {
                 anim.SetTrigger("Hit");
                 SoundManager.instance.PlayEffect(SoundManager.Effect.Hit);
-            }
-            else
+            }else
             {                                       // 죽음
                 isDie = true;
                 collider.enabled = false;

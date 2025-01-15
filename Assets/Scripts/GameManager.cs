@@ -53,9 +53,10 @@ public class GameManager : MonoBehaviour
     public Ease moveEase;
     public Image expImage;
     public AnimationCurve expGlow;
-
     public Volume volume;
     public Vignette vignette;
+    public Slider slider;
+    private bool isShaking = false;
     private void Awake()
     {
         instance = this;
@@ -203,15 +204,27 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ExpUpGlow()     // 경험치 획득시 경험치바 변색
     {
-        float percent = 0;
-        while (percent < 1)
-        {
-            percent += Time.deltaTime;
-            Color color = expImage.color;
-            color.g = Mathf.Lerp(0f, 1f, expGlow.Evaluate(percent));
-            expImage.color = color;
-            yield return null;
-        }
+        //float percent = 0;
+        //while (percent < 1)
+        //{
+        //    percent += Time.deltaTime;
+        //    Color color = expImage.color;
+        //    color.g = Mathf.Lerp(0f, 1f, expGlow.Evaluate(percent));
+        //    expImage.color = color;
+        //    yield return null;
+        //}
+        yield return new WaitForSeconds(0.5f);
+        slider.fillRect.GetComponent<Image>().DOColor(Color.red, 1f);
+        ShakeSlider();
+        yield return new WaitForSeconds(0.5f);
+        slider.fillRect.GetComponent<Image>().DOColor(Color.yellow, 1f);
+    }
+    private void ShakeSlider()
+    {
+        if (isShaking) return;
+        isShaking = true;
+
+        slider.transform.DOShakePosition(0.5f, new Vector3(2f, 2f, 0f), 20, 30f, false, true).OnKill(() => isShaking = false);
     }
     IEnumerator DoubleClickQuit()           // 뒤로가기 더블터치시 종료
     {

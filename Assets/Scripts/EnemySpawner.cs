@@ -6,10 +6,14 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public RectTransform bossTextrect;
-    public Transform eliteTrans;             // 보스에게 카메라 잠시 부착
+    public GameObject bossPrefab;
+    public GameObject boss;
+    public GameObject bossHp;
+
+    public RectTransform[] bossTextrect;
+    public Transform[] eliteTrans;             // 0은 엘리트, 1은 보스
     public GameObject eliteHp;
-    public GameObject eliteObject;       // 보스 소환시에 태그를 달아놓고 그 보스오브젝트에서 체력값을 빼옴
+    public GameObject eliteObject;       // 엘리트 소환시에 태그를 달아놓고 그 보스오브젝트에서 체력값을 빼옴
 
     public SpawnData[] spawnData;
     public Transform[] spawnPoint;
@@ -25,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnEnable()
     {
         Invoke("EliteSpawn", 299f);      // 5분째에 보스출현
+        Invoke("BossSpawn", 419f);
     }
     void Update()
     {
@@ -38,6 +43,12 @@ public class EnemySpawner : MonoBehaviour
                 timer = 0f;
             }
         }
+    }
+    void BossSpawn()
+    {
+        boss = Instantiate(bossPrefab);
+        eliteTrans[1] = boss.transform;
+        StartCoroutine(Elite(1));
     }
     void Spawn()
     {
@@ -67,33 +78,34 @@ public class EnemySpawner : MonoBehaviour
         GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
         enemy.GetComponent<Enemy>().GetInfo(spawnData[5]);
-        eliteTrans = enemy.transform;
+        eliteTrans[0] = enemy.transform;
         eliteObject = enemy;
         enemy.AddComponent<HpUiScript>();
         eliteHp.SetActive(true);
-        StartCoroutine("Elite");
+        StartCoroutine(Elite(0));
     }
-    IEnumerator Elite()          // 보스 등장 씬
+    IEnumerator Elite(int i)          // 엘리트 등장 씬
     {
+        int a = i;
         GameManager.instance.vignette.intensity.value = 1f;  // 초점 포커스 연출
-        StartCoroutine("EliteText");     // 텍스트액션
+        StartCoroutine(EliteText(a));     // 텍스트액션
         GameManager.instance.isLive = false;
-        GameManager.instance.vCam.Follow = eliteTrans.transform; // 카메라->보스
-        SoundManager.instance.PlayEffect(SoundManager.Effect.Elite); // 보스등장 이펙트사운드
-        yield return new WaitForSecondsRealtime(2.5f);              // 보스 2.5초동안 보여주기
+        GameManager.instance.vCam.Follow = eliteTrans[i].transform; // 카메라->엘리트
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Elite); // 엘리트 등장 이펙트사운드
+        yield return new WaitForSecondsRealtime(2.5f);              // 엘리트 2.5초동안 보여주기
         GameManager.instance.vCam.Follow = target.transform;    // 다시 카메라->플레이어
         GameManager.instance.vignette.intensity.value = 0.44f;      // 초점 포커스 풀기
         GameManager.instance.isLive = true;
     }
-    IEnumerator EliteText()          // 보스 등장시 텍스트액션
+    IEnumerator EliteText(int i)          // 엘리트 등장시 텍스트액션
     {
-        bossTextrect.gameObject.SetActive(true);      // 텍스트 ON
+        bossTextrect[i].gameObject.SetActive(true);      // 텍스트 ON
         yield return new WaitForSeconds(0.5f);
-        bossTextrect.DOAnchorPosX(0, 0.7f).SetEase(Ease.OutSine);
+        bossTextrect[i].DOAnchorPosX(0, 0.7f).SetEase(Ease.OutSine);
         yield return new WaitForSeconds(1.5f);      // DoTween으로 지나가는 효과
-        bossTextrect.DOAnchorPosX(140, 0.6f).SetEase(Ease.InSine);
+        bossTextrect[i].DOAnchorPosX(140, 0.6f).SetEase(Ease.InSine);
         yield return new WaitForSeconds(0.6f);
-        bossTextrect.gameObject.SetActive(false); // 텍스트 OFF
+        bossTextrect[i].gameObject.SetActive(false); // 텍스트 OFF
     }
 }
 [System.Serializable]

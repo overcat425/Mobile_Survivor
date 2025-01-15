@@ -19,7 +19,7 @@ public class SoundManager : MonoBehaviour
     AudioSource[] effSources;
     public int channels;
     int channel;                        // 효과음 열거형 대잔치
-    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin, Bounce, Elite }
+    public enum Effect { Die, Hit, LvUp=3, GameOver, Melee, Range=7, Select, Win, Click, Notice, Coin, Bounce, Elite , BossAttack, BossDie }
 
     [Header("Buttons")]
     public GameObject muteBtn;
