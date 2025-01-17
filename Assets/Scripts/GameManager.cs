@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public Player player;
     public static GameManager instance;
+    public GoogleManager googleManager;
     public EnemySpawnPool enemySpawnPool;
     public EnemySpawner enemySpawner;
     public ExpItemPool expItemPool;

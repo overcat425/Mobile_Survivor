@@ -17,17 +17,16 @@ public class EnemyScanner : MonoBehaviour
     Transform GetNearest()
     {
         Transform result = null;
-        float distance = 100;           // 사거리
-
-        foreach(RaycastHit2D target in targets)
+        float distance = 100f;           // 사거리
+        foreach(RaycastHit2D target in targets)     // 레이캐스트 맞은 타겟 중
         {
-            Vector3 myPos = transform.position;
+            Vector3 playerPos = transform.position;
             Vector3 targetPos = target.transform.position;
-            float diff = Vector3.Distance(myPos, targetPos);
-            if(diff < distance)
+            float diff = Vector3.Distance(playerPos, targetPos);
+            if(diff < distance)         // 더 짧은 타겟이 있으면
             {
                 distance = diff;
-                result = target.transform;
+                result = target.transform; // 그 타겟 리턴
             }
         }
         return result;

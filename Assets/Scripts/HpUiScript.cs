@@ -17,7 +17,7 @@ public class HpUiScript : MonoBehaviour
     {
         eliteHealth = enemy.health;
         eliteMaxHealth = enemy.maxHealth;
-        if(eliteHealth < 0)
+        if(eliteHealth <= 0)
         {
             StartCoroutine("EliteDie");
         }

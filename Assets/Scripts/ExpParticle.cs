@@ -8,7 +8,6 @@ public class ExpParticle : MonoBehaviour
 {                                                   // 경험치 구슬 UI전시 스크립트
     public Transform dest;              // 구슬이 추적할 목적지 (경험치칸)
     public Image image;
-
     public float rotationSpeed = 0f;
     private void Awake()
     {

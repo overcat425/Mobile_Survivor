@@ -28,8 +28,8 @@ public class EnemySpawner : MonoBehaviour
     }
     private void OnEnable()
     {
-        Invoke("EliteSpawn", 299f);      // 5분째에 보스출현
-        Invoke("BossSpawn", 419f);
+        Invoke("EliteSpawn", 299f);      // 5분째에 엘리트출현
+        Invoke("BossSpawn", 422f);      // 7분째에 보스출현
     }
     void Update()
     {
@@ -44,12 +44,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
-    void BossSpawn()
-    {
-        boss = Instantiate(bossPrefab);
-        eliteTrans[1] = boss.transform;
-        StartCoroutine(Elite(1));
-    }
+
     void Spawn()
     {
         switch (level)  // 웨이브레벨이 1이면 기본 몬스터만 소환하고, 2부터는 몬스터가 더 많이 출몰(DoubleSpawn())
@@ -73,6 +68,12 @@ public class EnemySpawner : MonoBehaviour
             enemy.GetComponent<Enemy>().GetInfo(spawnData[level - i]);
         }
     }
+    void BossSpawn()
+    {
+        boss = Instantiate(bossPrefab, spawnPoint[Random.Range(1, spawnPoint.Length)]);
+        eliteTrans[1] = boss.transform;
+        StartCoroutine(Elite(1));
+    }
     void EliteSpawn()
     {
         GameObject enemy = GameManager.instance.enemySpawnPool.Spawn(0);
@@ -84,20 +85,19 @@ public class EnemySpawner : MonoBehaviour
         eliteHp.SetActive(true);
         StartCoroutine(Elite(0));
     }
-    IEnumerator Elite(int i)          // 엘리트 등장 씬
+    IEnumerator Elite(int i)          // 엘리트 및 보스 등장 씬
     {
-        int a = i;
         GameManager.instance.vignette.intensity.value = 1f;  // 초점 포커스 연출
-        StartCoroutine(EliteText(a));     // 텍스트액션
+        StartCoroutine(EliteText(i));     // 텍스트액션
         GameManager.instance.isLive = false;
-        GameManager.instance.vCam.Follow = eliteTrans[i].transform; // 카메라->엘리트
-        SoundManager.instance.PlayEffect(SoundManager.Effect.Elite); // 엘리트 등장 이펙트사운드
-        yield return new WaitForSecondsRealtime(2.5f);              // 엘리트 2.5초동안 보여주기
+        GameManager.instance.vCam.Follow = eliteTrans[i].transform; // 카메라->몬스터
+        SoundManager.instance.PlayEffect(SoundManager.Effect.Elite); // 등장 이펙트사운드
+        yield return new WaitForSecondsRealtime(2.5f);              // 2.5초동안 보여주기
         GameManager.instance.vCam.Follow = target.transform;    // 다시 카메라->플레이어
         GameManager.instance.vignette.intensity.value = 0.44f;      // 초점 포커스 풀기
         GameManager.instance.isLive = true;
     }
-    IEnumerator EliteText(int i)          // 엘리트 등장시 텍스트액션
+    IEnumerator EliteText(int i)          // 엘리트 및 보스 등장시 텍스트액션
     {
         bossTextrect[i].gameObject.SetActive(true);      // 텍스트 ON
         yield return new WaitForSeconds(0.5f);

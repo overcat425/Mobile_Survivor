@@ -6,7 +6,7 @@ enum Estate { Run, Attack, Dead }
 public class BossFSM : MonoBehaviour
 {
     public State currentState { get; set; }     // 현재 보스가 가지고 있는 상태 저장
-    private readonly BossScript controll; // 보스의 주요 로직을 담은 BossScript클래스의 인스턴스를 참조함
+    private readonly BossScript controll; // 보스 로직을 담은 BossScript클래스의 인스턴스를 참조함
     public BossFSM(BossScript controller)
     {                                   // BossScript의 인스턴스를 받아 controll에 할당함.
         controll = controller;

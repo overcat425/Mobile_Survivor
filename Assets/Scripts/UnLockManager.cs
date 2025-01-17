@@ -37,7 +37,6 @@ public class UnLockManager : MonoBehaviour          // 해금 스크립트
         {                                                               // 해금여부 확인 후 캐릭터 전시
             string unlockName = unlocks[i].ToString();
             bool isUnlock = PlayerPrefs.GetInt(unlockName) == 1;
-            lockedCharacter[i].SetActive(!isUnlock);
             unlockedCharacter[i].SetActive(isUnlock);
         }
     }

@@ -28,7 +28,6 @@ public class RunState : MonoBehaviour, State
                 bossScript.rigid.velocity = Vector2.zero;
             }
         }
-        Debug.Log("RunState");
     }
     public void ExitState()
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 public interface State      // 각 행동 상태를 나타내는 인터페이스
 {
     public void EnterState();

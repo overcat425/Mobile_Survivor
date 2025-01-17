@@ -57,13 +57,13 @@ public class Player : MonoBehaviour
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
-    {                                                               // 피격시 프레임수준에서 체력감소
+    {                                                               // 피격시  체력감소 메소드
         if (GameManager.instance.isLive && GameManager.instance.isHitable == true)
         {               // 게임 진행중 + 무적이 아닐때만 피격시 데미지
             StartCoroutine("BloodScreen");
             GameManager.instance.health -= Time.deltaTime * 10;
         }
-        if (GameManager.instance.health < 0)            // 사망시 무기 비활성화 후 묘비애니메이션
+        if (GameManager.instance.health < 0)    // 사망시 무기 비활성화 후 사망애니메이션
         {
             for (int i = 2; i < transform.childCount; i++)
             {

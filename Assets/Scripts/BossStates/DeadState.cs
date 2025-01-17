@@ -13,7 +13,6 @@ public class DeadState : MonoBehaviour, State
     }
     public void UpdateState()
     {
-        Debug.Log("DeadState");
         StartCoroutine("DestroyBoss");
     }
     public void ExitState(){}
