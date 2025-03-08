@@ -11,4 +11,4 @@
 ● Google Cloud를 이용한 구글 플레이 계정 연동(로그인)<br><br>
 플레이 영상 URL : https://www.youtube.com/watch?v=tlpf6yOxZQ0 <br><br><br>
 
-![Image](https://github.com/user-attachments/assets/44980b88-88ca-41a0-b919-89e5d1c95dc5)<br>br>
+![Image](https://github.com/user-attachments/assets/44980b88-88ca-41a0-b919-89e5d1c95dc5)<br><br>
