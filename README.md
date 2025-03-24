@@ -5,7 +5,7 @@
 
 <h3>🛠 구현한 기능 🛠</h3>
 ● 오브젝트 풀링을 이용한 enemy 객체 재활용<br>
-● FSM 디자인 패턴을 이용한 보스 패턴<br>
+● FSM 디자인 패턴을 이용한 보스 상태 관리<br>
 ● DoTween을 이용한 보스 출현 씬과 경험치 흡수 액션 구현<br>
 ● GPGS(Google Play Games Service)를 이용한 업적 구현<br>
 ● Google Cloud를 이용한 구글 플레이 계정 연동(로그인)<br><br>
